@@ -5,8 +5,6 @@ import number_points from "../../assets/number_points.png";
 import bullet_ponits from "../../assets/bullet_points.png";
 import React, { useState } from "react";
 import Warning from "../Warning/Warning";
-import "react-toastify/dist/ReactToastify.css";
-
 
 const AddTaskModal = (props) => {
   const [count, setCount] = useState(0);
@@ -18,7 +16,6 @@ const AddTaskModal = (props) => {
   const [showWarning, setShowWarning] = useState("");
   const [description, setDescription] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
- 
 
   const selectCategory = (category) => {
     setCurrentCategory(category);
@@ -32,11 +29,11 @@ const AddTaskModal = (props) => {
   const selectDescription = (e) => {
     setCount(e.target.value.length);
     setDescription(e.target.value);
-  }
+  };
   const selectUploadFile = (e) => {
     setUploadFile(e.target.files[0]);
-  }
-  
+  };
+
   function handelResult() {
     if (!taskName) {
       setShowWarning("Please give the Task Name");
@@ -60,17 +57,14 @@ const AddTaskModal = (props) => {
 
     const taskObj = {
       taskName: taskName,
-      description:description,
+      description: description,
       dueDate: currentDate,
       status: currentStatus,
       category: currentCategory,
       uploadFile: uploadFile,
-
     };
 
     props.addTask(taskObj);
-   
-    
 
     // props.closeModal(false);
   }
@@ -89,7 +83,6 @@ const AddTaskModal = (props) => {
             placeholder="Task title"
             className="taskTile"
             onChange={(e) => setTaskName(e.target.value)}
-            
           />
 
           <div className="description_container">
