@@ -1,0 +1,30 @@
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(172, 170, 170, 0.5);
+}
+
+.loader {
+  width: 80px;
+  height: 80px;
+  border: 10px solid transparent;
+  border-top: 10px solid blue;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 15px rgba(0, 0, 255, 0.361);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

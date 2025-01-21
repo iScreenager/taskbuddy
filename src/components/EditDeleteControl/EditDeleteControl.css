@@ -1,0 +1,55 @@
+.editDelete_Options {
+  width: 126px;
+  height: 76px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #fff9f9;
+  border-radius: 12px;
+  border: 0.5px solid #7b19841f;
+  box-shadow: 0 2px 12px #7b19841f;
+  position: absolute;
+  top: -50px;
+  right: 45px;
+  z-index: 10;
+
+  /* top: 0;
+  left: 85%;
+  z-index: 1; */
+}
+.edit_option,
+.delete_option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+.edit_option img,
+.delete_option img {
+  width: 14px;
+  height: 14px;
+}
+
+.edit_option p,
+.delete_option p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.delete_option p {
+  color: #da2f2f;
+}
+
+.edit_option:hover img,
+.delete_option:hover img {
+  height: 15px;
+  width: 15px;
+}
+
+.edit_option:hover p,
+.delete_option:hover p {
+  font-size: 17px;
+}

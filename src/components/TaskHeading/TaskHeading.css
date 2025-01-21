@@ -1,0 +1,28 @@
+.task_heading {
+  display: flex;
+  width: 95%;
+  height: 21px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.task_heading div {
+  font-size: 14px;
+  font-weight: bold;
+  color: #868080;
+}
+
+.task_heading div img {
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+}
+.task_name {
+  width: 40%;
+  padding-left: 10px;
+}
+
+.due_date,
+.task_status,
+.task_category {
+  width: 20%;
+}
