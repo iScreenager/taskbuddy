@@ -1,0 +1,23 @@
+.ChangeStatusOption_box {
+  background-color: #fff9f9;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  border: 1px solid #7b198426;
+  position: absolute;
+  z-index: 10;
+  top: 90%;
+  overflow: hidden;
+  text-align: left;
+}
+.ChangeStatusOption_box p {
+  margin: 0;
+  font-size: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  background-color: #fff9f9;
+}
+.ChangeStatusOption_box p:hover {
+  font-weight: bold;
+}

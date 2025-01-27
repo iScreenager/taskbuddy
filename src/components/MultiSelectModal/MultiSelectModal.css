@@ -1,0 +1,75 @@
+.multiSelectModal_container {
+  width: 365px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1a1c20;
+  position: absolute;
+  top: 90%;
+  left: 40%;
+  border: 1px solid #1a1c20;
+  border-radius: 12px;
+}
+
+.info_select_box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 5px 10px;
+}
+.info_select_box img {
+  width: 15px;
+  height: 15px;
+}
+.selected_task_count p {
+  margin: 0;
+  font-size: 12px;
+}
+.selected_task_count {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+  padding: 5px 13px;
+  color: #ffffff;
+  border: 0.5px solid #ffffff;
+  border-radius: 12px;
+}
+.selected_task_count .close_btn {
+  width: 8px;
+  height: 8px;
+  cursor: pointer;
+}
+.selected_task_count .close_btn:hover {
+  width: 9px;
+  height: 9px;
+  cursor: pointer;
+}
+
+.multiSelect_btn {
+  margin: 5px 10px;
+  display: flex;
+  gap: 12px;
+}
+.multiSelect_btn button {
+  border: 0.5px solid #dddadd;
+  border-radius: 12px;
+  padding: 5px 13px;
+  background-color: #8d8a8a30;
+  color: #ffffff;
+}
+.multiSelect_btn .delete_btn {
+  border: 0.5px solid #e13838;
+  background-color: #ff35351c;
+  color: #e13838;
+}
+
+.multiSelect_btn button:hover {
+  cursor: pointer;
+  box-shadow: 1px 2px 2px #8d8a8ad2;
+}
+.multiSelect_btn .delete_btn:hover {
+  cursor: pointer;
+  box-shadow: 1px 2px 2px #ff35357d;
+}

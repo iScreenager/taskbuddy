@@ -7,14 +7,15 @@ import React, { useState } from "react";
 import Warning from "../Warning/Warning";
 
 const AddTaskModal = (props) => {
+  const { data, updateTask } = props;
   const [count, setCount] = useState(0);
   const [isBold, setIsBold] = useState(false);
-  const [taskName, setTaskName] = useState("");
-  const [currentCategory, setCurrentCategory] = useState("");
-  const [currentDate, setCurrentDate] = useState("");
-  const [currentStatus, setCurrentStatus] = useState("");
+  const [taskName, setTaskName] = useState(data?.taskName ?? "");
+  const [currentCategory, setCurrentCategory] = useState(data?.category ?? "");
+  const [currentDate, setCurrentDate] = useState(data?.dueDate ?? "");
+  const [currentStatus, setCurrentStatus] = useState(data?.status ?? "");
   const [showWarning, setShowWarning] = useState("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(data?.description ?? "");
   const [uploadFile, setUploadFile] = useState(null);
 
   const selectCategory = (category) => {
@@ -64,7 +65,7 @@ const AddTaskModal = (props) => {
       uploadFile: uploadFile,
     };
 
-    props.addTask(taskObj);
+    data ? updateTask(taskObj, data.id) : props.addTask(taskObj);
 
     // props.closeModal(false);
   }
@@ -73,7 +74,7 @@ const AddTaskModal = (props) => {
     <div className="task_modal">
       <div className="createTaskModal_container">
         <div className="createTaskModal_heading">
-          <p>Create Task</p>
+          <p>{data ? "Edit Task" : "Create Task"}</p>
           <img src={close} alt="close_icons" onClick={props.closeModal}></img>
         </div>
         <hr className="divider" />
@@ -82,6 +83,7 @@ const AddTaskModal = (props) => {
             type="text"
             placeholder="Task title"
             className="taskTile"
+            value={taskName}
             onChange={(e) => setTaskName(e.target.value)}
           />
 
@@ -92,6 +94,7 @@ const AddTaskModal = (props) => {
                 placeholder="Description"
                 maxLength="300"
                 rows="6"
+                value={description}
                 onChange={selectDescription}
                 style={{ fontWeight: isBold ? "bold" : "normal" }}></textarea>
             </div>
@@ -160,6 +163,7 @@ const AddTaskModal = (props) => {
               <input
                 type="date"
                 className="task_btn"
+                value={currentDate}
                 onChange={selectDate}></input>
             </div>
             <div className="taskStatu">
@@ -169,6 +173,7 @@ const AddTaskModal = (props) => {
               <select
                 id="options"
                 name="options"
+                value={currentStatus}
                 onChange={selectTaskStatus}
                 required>
                 <option value="" disabled selected>
@@ -195,9 +200,11 @@ const AddTaskModal = (props) => {
         </div>
 
         <div className="createTaskModal_footer">
-          <button className="cancel_btn">CANCEL</button>
+          <button onClick={props.closeModal} className="cancel_btn">
+            CANCEL
+          </button>
           <button className="create_btn" onClick={handelResult}>
-            CREATE
+            {data ? "UPDATE" : "CREATE"}
           </button>
         </div>
         {showWarning && (

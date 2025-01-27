@@ -14,10 +14,10 @@
   width: 80px;
   height: 80px;
   border: 10px solid transparent;
-  border-top: 10px solid blue;
+  border-top: 10px solid grey;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  box-shadow: 0 0 15px rgba(0, 0, 255, 0.361);
+  box-shadow: 0 0 15px rgba(172, 170, 170, 0.361);
 }
 
 @keyframes spin {
