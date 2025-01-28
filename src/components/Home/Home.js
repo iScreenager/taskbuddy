@@ -1,12 +1,13 @@
 import "./Home.css";
 import Header from "../Header/Header.js";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
 import TaskHeading from "../TaskHeading/TaskHeading.js";
 import TaskCard from "../TaskCard/TaskCard.js";
 import AddTaskModal from "../AddTaskModal/AddTaskModal.js";
 import Loader from "../Loader/Loader.js";
 import { useEffect, useState } from "react";
+
 import {
   addDoc,
   collection,
@@ -18,7 +19,7 @@ import {
 import { db } from "../firebase.js";
 import MultiSelectModal from "../MultiSelectModal/MultiSelectModal.js";
 
-const Home = () => {
+const Home = ({ userData }) => {
   const navigate = useNavigate();
   const [taskData, setTaskData] = useState(null);
   const [cardData, setCardData] = useState([]);
@@ -30,8 +31,6 @@ const Home = () => {
   const [isShowMultiselectPopUp, setIsShowMultiselectPopUp] = useState(true);
   const [isAsc, setIsAsc] = useState(false);
 
-  const { state } = useLocation();
-  const getdataAPI = JSON.parse(state);
   const addTask = async (taskObj) => {
     setIsLoading(true);
     try {
@@ -103,11 +102,6 @@ const Home = () => {
     setCardData(cards);
   }, [taskData]);
 
-  if (state === null) {
-    navigate("/");
-    return;
-  }
-
   const handleCheckBoxClick = (taskId) => {
     if (storeCheckedId.includes(taskId)) {
       const newCheckedId = storeCheckedId.filter((id) => id !== taskId);
@@ -151,9 +145,10 @@ const Home = () => {
 
   return (
     <div className="home_container">
-      <Header dataApi={getdataAPI} />
+      <Header dataApi={userData} />
       <SearchAndFilter openModal={() => setShowModal(true)} />
       <div className="underLine"></div>
+      <Outlet />
       <TaskHeading
         sortData={() => {
           sortData();

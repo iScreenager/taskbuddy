@@ -15,7 +15,8 @@ const Login = () => {
       try {
         if (result.user) {
           // window.location.href = "/home";
-          navigate("/home", { state: JSON.stringify(result.user) });
+          localStorage.setItem("userData", JSON.stringify(result.user));
+          navigate("/");
         }
       } catch {
         navigate("/");

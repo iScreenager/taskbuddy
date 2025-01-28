@@ -4,17 +4,34 @@ import "./index.css";
 import App from "./App";
 import Home from "../src/components/Home/Home";
 import reportWebVitals from "./reportWebVitals";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
+import List from "../src/components/List/List";
+import Board from "./components/Board/Board";
+import Login from "./components/Login/Login";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to={"/list"} />,
+      },
+      {
+        path: "/list",
+        element: <List />,
+      },
+      {
+        path: "/board",
+        element: <Board />,
+      },
+    ],
   },
   {
-    path: "/home",
-    element: <Home />,
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
