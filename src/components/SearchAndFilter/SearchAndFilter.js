@@ -1,8 +1,11 @@
 import "./SearchAndFilter.css";
 import dropDown_down_icons from "../../assets/dropDown_down_icons.png";
 import search_icon from "../../assets/search_icon.png";
+import { useContext } from "react";
+import { TaskContext } from "../../context/TaskContext";
 
-const SearchAndFilter = (props) => {
+const SearchAndFilter = () => {
+  const { setShowAddModal } = useContext(TaskContext);
   return (
     <div className="main_container">
       <div className="filter_container">
@@ -21,7 +24,7 @@ const SearchAndFilter = (props) => {
           <img src={search_icon}></img>
           <input type="text" placeholder="Search"></input>
         </div>
-        <button className="addTask_btn" onClick={props.openModal}>
+        <button className="addTask_btn" onClick={() => setShowAddModal(true)}>
           ADD TASK
         </button>
       </div>

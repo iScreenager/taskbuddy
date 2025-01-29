@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import "./App.css";
 import Loader from "./components/Loader/Loader.js";
 import Home from "./components/Home/Home.js";
 import { useNavigate } from "react-router";

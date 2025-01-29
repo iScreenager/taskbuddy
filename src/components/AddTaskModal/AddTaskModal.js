@@ -3,11 +3,20 @@ import close from "../../assets/close_icon.png";
 import Descriptions from "../../assets/Descriptions.png";
 import number_points from "../../assets/number_points.png";
 import bullet_ponits from "../../assets/bullet_points.png";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Warning from "../Warning/Warning";
+import { useTask } from "../../hooks/useTask";
+import Loader from "../Loader/Loader";
+import { TaskContext } from "../../context/TaskContext";
 
-const AddTaskModal = (props) => {
-  const { data, updateTask } = props;
+const AddTaskModal = () => {
+  const { addTask, isLoading, updateTasks } = useTask();
+  const {
+    setAddModalData,
+    setShowAddModal,
+    addModalData: data,
+  } = useContext(TaskContext);
+
   const [count, setCount] = useState(0);
   const [isBold, setIsBold] = useState(false);
   const [taskName, setTaskName] = useState(data?.taskName ?? "");
@@ -65,17 +74,20 @@ const AddTaskModal = (props) => {
       uploadFile: uploadFile,
     };
 
-    data ? updateTask(taskObj, data.id) : props.addTask(taskObj);
-
-    // props.closeModal(false);
+    data ? updateTasks(taskObj, data.id) : addTask(taskObj);
   }
+
+  const closeModal = () => {
+    setAddModalData(null);
+    setShowAddModal(false);
+  };
 
   return (
     <div className="task_modal">
       <div className="createTaskModal_container">
         <div className="createTaskModal_heading">
           <p>{data ? "Edit Task" : "Create Task"}</p>
-          <img src={close} alt="close_icons" onClick={props.closeModal}></img>
+          <img src={close} alt="close_icons" onClick={closeModal}></img>
         </div>
         <hr className="divider" />
         <div className="createTaskModal_body">
@@ -200,7 +212,7 @@ const AddTaskModal = (props) => {
         </div>
 
         <div className="createTaskModal_footer">
-          <button onClick={props.closeModal} className="cancel_btn">
+          <button onClick={closeModal} className="cancel_btn">
             CANCEL
           </button>
           <button className="create_btn" onClick={handelResult}>
@@ -214,6 +226,7 @@ const AddTaskModal = (props) => {
           />
         )}
       </div>
+      {isLoading && <Loader />}
     </div>
   );
 };

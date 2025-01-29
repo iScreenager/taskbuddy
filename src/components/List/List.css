@@ -1,0 +1,15 @@
+.cardTask_coontainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.task_view {
+  overflow: scroll;
+  scrollbar-width: none;
+  padding-bottom: 100px;
+}

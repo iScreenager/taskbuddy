@@ -5,23 +5,11 @@ import addTask_icon from "../../assets/addTask_icon.png";
 
 import { useState } from "react";
 
-
-
-
 const TaskCard = (props) => {
   const cardClassName = props.cardName
     .toLowerCase() // Convert to lowercase
     .replace(/\s+/g, "-");
-  const {
-    cardName,
-    tasks,
-    openModal,
-    setSelectedTaskCard,
-    showEditDeleteModal,
-    setIsShowMultiSelectModal,
-    storeCheckedId,
-    editTask,
-  } = props;
+  const { cardName, tasks, setSelectedTaskCard, showEditDeleteModal } = props;
 
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [selectedStatusTaskId, setSelectedStatusTaskId] = useState(null);
@@ -56,7 +44,7 @@ const TaskCard = (props) => {
       </div>
       <div className="task_body">
         {props.cardName.toLowerCase() === "todo" && (
-          <div className="add_task_btn " onClick={openModal}>
+          <div className="add_task_btn ">
             <img src={addTask_icon} alt="Add Task icon"></img>
             <p>ADD TASK</p>
           </div>
@@ -77,18 +65,14 @@ const TaskCard = (props) => {
               <NewTaskCard
                 key={task.id}
                 taskData={task}
-                deleteTask={props.deleteTask}
                 showEditModal={
                   showEditDeleteModal && task.id === selectedTaskId
                 }
-                setSelectedTaskId={(id) => handleModalShow(id)}
-                checkedTaskId={(id) => setIsShowMultiSelectModal(id)}
-                storeCheckedId={storeCheckedId}
-                editTask={(taskData) => editTask(taskData)}
-                setSelectedStatusTaskId={(id) => handleShowEditStatusModal(id)}
                 showEditStatusModal={
                   showEditDeleteModal && task.id === selectedStatusTaskId
                 }
+                setSelectedTaskId={(id) => handleModalShow(id)}
+                setSelectedStatusTaskId={(id) => handleShowEditStatusModal(id)}
               />
             ))}
           </div>

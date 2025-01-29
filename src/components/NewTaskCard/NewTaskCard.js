@@ -1,31 +1,32 @@
 import "./NewTaskCard.css";
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import DragDrop_icon from "../../assets/dragNdrop.png";
 import Edit_Delete_icon from "../../assets/Edit_Delete_icon.png";
 import circle_checkBox from "../../assets/circle_checkBox.png";
 import EditDeleteControl from "../EditDeleteControl/EditDeleteControl.js";
 import Green_circle_checkBox from "../../assets/Green_circle_checkBox.png";
 import EditStatusOption from "../EditStatusOption/EditStatusOption.js";
+import { useTask } from "../../hooks/useTask.js";
+import { TaskContext } from "../../context/TaskContext.js";
 
 const NewTaskCard = (props) => {
+  const { deleteTasks, editTask } = useTask();
+  const { setStoreCheckedId, storeCheckedId } = useContext(TaskContext);
   const { taskName, dueDate, status, category, id } = props?.taskData;
   const {
     setSelectedTaskId,
-    deleteTask,
     showEditModal,
-    checkedTaskId,
-    storeCheckedId,
-    editTask,
     setSelectedStatusTaskId,
     showEditStatusModal,
   } = props;
-
-  // useEffect(() => {
-  //   console.log("Updated storeCheckedId:", storeCheckedId);
-  // }, [storeCheckedId]);
-
-  // const [isShowModifyOptions, setIsShowModifyOptions] = useState(false);
-
+  const handleCheckBoxClick = (taskId) => {
+    if (storeCheckedId.includes(taskId)) {
+      const newCheckedId = storeCheckedId.filter((id) => id !== taskId);
+      setStoreCheckedId([...newCheckedId]);
+    } else {
+      setStoreCheckedId([...storeCheckedId, taskId]);
+    }
+  };
   return (
     <div className="task_card">
       <div className="first_task_box">
@@ -34,9 +35,7 @@ const NewTaskCard = (props) => {
             type="checkbox"
             checked={storeCheckedId.includes(id)}
             className="square-checkbox"
-            onClick={() => {
-              checkedTaskId(id);
-            }}
+            onClick={() => handleCheckBoxClick(id)}
           />
           <img src={DragDrop_icon} className="drag_handler" alt="Icon" />
           <img
@@ -55,9 +54,10 @@ const NewTaskCard = (props) => {
         <div
           className="taskStatus card"
           onClick={() => setSelectedStatusTaskId(id)}>
-          <p>{status}</p>
+          <p className="taskStatus_option">{status}</p>
           {showEditStatusModal && <EditStatusOption id={id} />}
         </div>
+
         <div className="taskCategory card">{category}</div>
       </div>
       <div
@@ -68,7 +68,7 @@ const NewTaskCard = (props) => {
       {showEditModal && (
         <EditDeleteControl
           editTask={() => editTask(props.taskData)}
-          deleteTask={() => deleteTask(id)}
+          deleteTask={() => deleteTasks(id)}
         />
       )}
     </div>

@@ -51,6 +51,7 @@
   margin: 5px 10px;
   display: flex;
   gap: 12px;
+  position: relative;
 }
 .multiSelect_btn button {
   border: 0.5px solid #dddadd;

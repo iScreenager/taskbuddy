@@ -53,7 +53,7 @@
   display: flex;
   cursor: pointer;
 }
-.taskStatus p {
+.taskStatus .taskStatus_option {
   border: 1px #dddadd;
   background-color: #dddadd;
   border-radius: 4px;

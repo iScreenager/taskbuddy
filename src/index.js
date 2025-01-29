@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import Home from "../src/components/Home/Home";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import List from "../src/components/List/List";
 import Board from "./components/Board/Board";
 import Login from "./components/Login/Login";
+import { TaskProvider } from "./context/TaskContext";
 
 const appRouter = createBrowserRouter([
   {
@@ -38,7 +38,9 @@ const appRouter = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={appRouter} />
+    <TaskProvider>
+      <RouterProvider router={appRouter} />
+    </TaskProvider>
   </React.StrictMode>
 );
 
