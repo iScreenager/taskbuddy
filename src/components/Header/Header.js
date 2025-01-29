@@ -20,7 +20,7 @@ const Header = (props) => {
           <p>TaskBuddy</p>
         </div>
         <div className="task_menu">
-          <div class="list menu" onClick={() => navigateTo("list")}>
+          <div className="list menu" onClick={() => navigateTo("list")}>
             <img src={list_icon}></img>
             <p>List</p>
           </div>

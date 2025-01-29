@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     fetchDataFromLocalStorage();
-  }, [fetchDataFromLocalStorage]);
+  }, []);
 
   if (loading) {
     return <Loader />;

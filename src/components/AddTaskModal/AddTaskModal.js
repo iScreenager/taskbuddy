@@ -187,10 +187,10 @@ const AddTaskModal = (props) => {
           </div>
           <div className="attachment">
             <p>Attachment</p>
-            <div id="dropzone" class="dropzone">
+            <div id="dropzone" className="dropzone">
               <p>
                 Drop your files here or{" "}
-                <a href="#" class="update-link">
+                <a href="#" className="update-link">
                   Update
                 </a>
               </p>
