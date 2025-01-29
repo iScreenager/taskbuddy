@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import Loader from "./components/Loader/Loader.js";
 import Home from "./components/Home/Home.js";
@@ -9,20 +9,20 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
 
-  const fetchDataFromLocalStorage = async () => {
+  const fetchDataFromLocalStorage = useCallback(() => {
     const myData = localStorage.getItem("userData");
-    const result = await JSON.parse(myData);
+    const result = JSON.parse(myData);
     if (myData !== null) {
       setLoading(false);
       setUserData(result);
     } else {
       navigate("/login");
     }
-  };
+  }, [navigate]);
 
   useEffect(() => {
     fetchDataFromLocalStorage();
-  }, []);
+  }, [fetchDataFromLocalStorage]);
 
   if (loading) {
     return <Loader />;
