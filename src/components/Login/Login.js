@@ -1,11 +1,13 @@
 import logo from "../../assets/logo.png";
 import "./Login.css";
+import login from "../../assets/login.png";
 import circleBg from "../../assets/circles_bg.png";
 import dummyImg from "../../assets/login-dummy-img.png";
 import google from "../../assets/google.png";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,13 +25,19 @@ const Login = () => {
       }
     });
   };
-
+  const { isMobile } = useIsMobile();
   return (
-    <div className="login-container">
-      <img className="circle_bg" src={circleBg} />
-      <img className="dummy_img" src={dummyImg} />
+    <div
+      className="login-container"
+      style={isMobile ? { justifyContent: "center" } : {}}>
+      {isMobile && (
+        <img className="login_bg" src={login} alt="background_img" />
+      )}
 
-      <div className="login-box">
+      {!isMobile && <img className="circle_bg" src={circleBg} />}
+      {!isMobile && <img className="dummy_img" src={dummyImg} />}
+
+      <div className={isMobile ? "login-box-moblie-view" : "login-box"}>
         <div className="logo-container">
           <img src={logo} height={28} width={22} alt="Logo" />
           <p className="logo-text">TaskBuddy</p>
@@ -39,8 +47,11 @@ const Login = () => {
           all-in-one task management app.
         </p>
         <button className="login-btn" onClick={googleSign}>
-          <img src={google} />
-          <p style={{ margin: 0, marginLeft: 10 }}>Continue with Google</p>
+          <img src={google} alt="icon" />
+          <p
+            style={{ margin: 0, marginLeft: 10, fontSize: isMobile ? 14 : 18 }}>
+            Continue with Google
+          </p>
         </button>
       </div>
     </div>

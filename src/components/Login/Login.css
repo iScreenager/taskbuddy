@@ -1,36 +1,39 @@
 .login-container {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   position: fixed;
   background-color: #fff9f9;
 }
-.left-container {
-  width: 50%;
-  height: 100%;
-}
-.right-container {
-  width: 50%;
-  height: 100%;
+.login_bg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  max-width: 100vw;
+  z-index: -1;
 }
 .circle_bg {
   position: absolute;
   right: -50px;
   top: 50px;
+  max-width: 60vw;
 }
 .dummy_img {
   position: absolute;
   right: 0px;
   display: flex;
   align-self: center;
+  max-width: 50%;
 }
 .login-box {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   align-self: center;
-  width: 365px;
+  flex-wrap: wrap;
+  width: 30%;
+  max-width: 365px;
   text-align: start;
   margin-left: 100px;
 }
@@ -66,4 +69,23 @@
   margin-bottom: 24px;
   font-size: 12px;
   font-weight: 500;
+}
+.login-box-moblie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.login-box-moblie-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 350px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.login-box-moblie-view img {
+  width: 14px;
+  height: 14px;
 }
