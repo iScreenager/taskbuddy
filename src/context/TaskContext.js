@@ -21,6 +21,8 @@ export const TaskContext = createContext({
   setIsLoading: () => {},
   filteredDate: undefined,
   setFilteredDate: () => {},
+  userData: undefined,
+  setUserData: () => {},
 });
 
 export const TaskProvider = ({ children }) => {
@@ -34,6 +36,7 @@ export const TaskProvider = ({ children }) => {
   const [filteredDate, setFilteredDate] = useState(null);
   const [searchField, setSearchField] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   return (
     <TaskContext.Provider
@@ -58,6 +61,8 @@ export const TaskProvider = ({ children }) => {
         setSearchField,
         isLoading,
         setIsLoading,
+        userData,
+        setUserData,
       }}>
       {children}
     </TaskContext.Provider>

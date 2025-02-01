@@ -23,12 +23,12 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     setStoreCheckedId,
     isLoading,
     setIsLoading,
+    userData,
   } = useContext(TaskContext);
-
   const addTask = async (taskObj) => {
     setIsLoading(true);
     try {
-      await addDoc(collection(db, "tasks"), taskObj);
+      await addDoc(collection(db, "tasks", userData.uid, "userTasks"), taskObj);
       setShowAddModal(false);
       getTasks();
     } catch (error) {
@@ -37,8 +37,11 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
   };
 
   const getTasks = async () => {
+    console.log("getTasks");
     try {
-      const taskCollections = await getDocs(collection(db, "tasks"));
+      const taskCollections = await getDocs(
+        collection(db, "tasks", userData.uid, "userTasks")
+      );
       const tasks = taskCollections.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -47,6 +50,7 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
       setTaskData([...sortedData]);
       setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error("Error fetching tasks:", error);
     }
   };
@@ -55,7 +59,7 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     setIsLoading(true);
     try {
       if (taskId) {
-        const taskDoc = doc(db, "tasks", taskId);
+        const taskDoc = doc(db, "tasks", userData.uid, "userTasks", taskId);
         await deleteDoc(taskDoc);
         console.log("Single task deleted successfully.");
       } else if (storeCheckedId.length > 0) {
@@ -78,7 +82,7 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     setIsLoading(true);
     try {
       if (taskId) {
-        const taskDoc = doc(db, "tasks", taskId);
+        const taskDoc = doc(db, "tasks", userData.uid, "userTasks", taskId);
         await setDoc(taskDoc, editTaskData, { merge: true });
         setShowAddModal(false);
         setAddModalData(null);

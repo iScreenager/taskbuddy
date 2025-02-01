@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Loader from "./components/Loader/Loader.js";
 import Home from "./components/Home/Home.js";
 import { useNavigate } from "react-router";
+import { TaskContext } from "./context/TaskContext.js";
 
 function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null);
+  const { setUserData } = useContext(TaskContext);
 
   const fetchDataFromLocalStorage = useCallback(() => {
     const myData = localStorage.getItem("userData");
@@ -28,7 +29,7 @@ function App() {
   }
   return (
     <div className="App">
-      <Home userData={userData} />
+      <Home />
     </div>
   );
 }

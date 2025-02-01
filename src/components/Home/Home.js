@@ -10,7 +10,8 @@ import { useTask } from "../../hooks/useTask.js";
 import { useIsMobile } from "../../hooks/useIsMobile.js";
 import { TaskContext } from "../../context/TaskContext.js";
 
-const Home = ({ userData }) => {
+const Home = () => {
+  const { userData } = useContext(TaskContext);
   useTask({
     fetchOnLoad: true,
   });
