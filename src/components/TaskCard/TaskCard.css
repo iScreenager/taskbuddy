@@ -1,11 +1,11 @@
 .task_card_body {
   width: 100%;
-  margin-top: 8px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   border-radius: 0 0 12px 12px;
   position: relative;
+  margin-top: 10px;
 }
 .title_container {
   width: 100%;
@@ -41,11 +41,9 @@
 }
 .in-progress {
   background-color: #85d9f1;
-  margin-top: 10px;
 }
 .completed {
   background-color: #ceffcc;
-  margin-top: 10px;
 }
 .add_task_btn {
   background-color: #f1f1f1;

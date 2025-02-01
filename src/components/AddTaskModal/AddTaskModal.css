@@ -1,46 +1,54 @@
 .task_modal {
+  width: 100%;
+  height: 100%;
   position: absolute;
   padding: 0;
   background-color: rgba(128, 128, 128, 0.671);
   top: 0px;
   right: 0px;
-  width: 100%;
-  height: 100%;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+}
+.mobile_view_task_modal {
+  align-items: flex-end;
 }
 .createTaskModal_container {
-  width: 50%;
+  min-width: 50%;
+  max-height: 100%;
   background-color: white;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
-.createTaskModal_heading p {
-  margin: 0;
+.moblie_view_createTaskModal_container {
+  width: 100%;
 }
 .createTaskModal_heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* padding: 25px 20px; */
-  padding: 20px;
+  padding: 25px 20px;
+}
+.moblie_view_createTaskModal_heading {
+  padding: 10px 20px;
+}
+.createTaskModal_heading p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .divider {
   width: 100%;
-  color: #2f2f2f;
+  height: 2px;
+  background-color: #2f2f2f18;
+  margin-bottom: 10px;
 }
 
-.createTaskModal_container p {
-  font-size: 24px;
-  font-weight: 500;
-  color: #2f2f2f;
-  padding: 0;
-  margin: 0;
-}
 .createTaskModal_container img {
   width: 12px;
   height: 12px;
@@ -51,7 +59,11 @@
   height: 14px;
 }
 .createTaskModal_body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   padding: 0 25px 25px 25px;
+  overflow: scroll;
 }
 
 .taskTile {
@@ -67,7 +79,7 @@
 }
 .description_container {
   width: 100%;
-  margin-top: 12px;
+  /* margin-top: 12px; */
   box-sizing: border-box;
   border: 1px solid #aba8a8;
   border-radius: 12px;
@@ -148,23 +160,35 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  gap: 20px;
+}
+.mobile_view_task_type {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobile_view_task_type .taskCategory_box,
+.mobile_view_task_type .taskDueDate,
+.mobile_view_task_type .taskStatu {
+  gap: 2px;
 }
 .taskCategory_box,
 .taskDueDate,
 .taskStatu {
-  width: 30%;
+  /* width: 30%; */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
-
+.taskStatu p,
 .taskCategory_box p {
   margin: 0;
   font-size: 12px;
   color: #5a5959;
-  margin-bottom: 15px;
 }
 .taskCategory_btn {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
 }
 
 .btn {
@@ -173,6 +197,9 @@
   background-color: #ffffff;
   font-size: 11px;
   font-weight: 600;
+  color: #1e212a;
+  border-radius: 30px;
+  padding: 10px 25px 10px 25px;
 }
 .btn:hover {
   box-shadow: 1px 2px 2px #241e2aa9;
@@ -185,43 +212,44 @@
 }
 .work_btn {
   border-radius: 30px;
-  padding: 10px 30px 10px 30px;
-}
-.personal_btn {
-  border-radius: 30px;
-  padding: 10px 25px 10px 25px;
+  padding: 10px 35px 10px 35px;
 }
 
 .taskDueDate p {
   margin: 0;
   font-size: 12px;
-  margin-bottom: 15px;
   color: #5a5959;
 }
 .taskDueDate input,
 select {
-  width: 195px;
+  -webkit-appearance: initial;
   font-size: 12px;
-  padding: 10px 5px;
+  padding: 10px 0px;
   border: 1px solid #ccc;
   border-radius: 10px;
   text-transform: uppercase;
   background-color: #f9f9f9;
   font-weight: 500;
   color: #aba8a8;
+  text-indent: 5px;
   outline: none;
+  min-width: 160px;
+  max-width: 40%;
+}
+.calendarIcon-add {
+  width: 12px !important;
+  height: 12px !important;
+  top: 10%;
+  left: 130px;
+  cursor: pointer;
 }
 
-.attachment {
-  margin-top: 15px;
-}
-
-.taskStatu p,
 .attachment p {
   margin: 0;
   font-size: 12px;
-  margin-bottom: 15px;
   color: #5a5959;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .dropzone p {
@@ -229,6 +257,7 @@ select {
 }
 .dropzone {
   width: 100%;
+  box-sizing: border-box;
   padding: 15px 5px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -251,18 +280,20 @@ select {
 
 .drop_file {
   width: 100%;
-  height: 100px;
 }
 
 .createTaskModal_footer {
   width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   background-color: #d3d3d3;
   display: flex;
   justify-content: flex-end;
   border-top: 1px solid #aba8a8;
+  column-gap: 10px;
+  padding: 10px;
 }
 .createTaskModal_footer button {
-  margin: 15px;
   padding: 12px 20px;
   border-radius: 20px;
   border: 1px solid #aba8a8;

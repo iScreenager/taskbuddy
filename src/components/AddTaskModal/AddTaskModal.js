@@ -8,13 +8,19 @@ import Warning from "../Warning/Warning";
 import { useTask } from "../../hooks/useTask";
 import Loader from "../Loader/Loader";
 import { TaskContext } from "../../context/TaskContext";
+import { useIsMobile } from "../../hooks/useIsMobile";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { getFormattedDate } from "../../utils/getFormattedDate";
 
 const AddTaskModal = () => {
-  const { addTask, isLoading, updateTasks } = useTask();
+  const { addTask, updateTasks } = useTask();
+  const { isMobile } = useIsMobile();
   const {
     setAddModalData,
     setShowAddModal,
     addModalData: data,
+    isLoading,
   } = useContext(TaskContext);
 
   const [count, setCount] = useState(0);
@@ -30,8 +36,10 @@ const AddTaskModal = () => {
   const selectCategory = (category) => {
     setCurrentCategory(category);
   };
-  const selectDate = (e) => {
-    setCurrentDate(e.target.value);
+
+  const selectDate = (date) => {
+    const formattedDate = getFormattedDate(date);
+    setCurrentDate(formattedDate);
   };
   const selectTaskStatus = (e) => {
     setCurrentStatus(e.target.value);
@@ -83,13 +91,26 @@ const AddTaskModal = () => {
   };
 
   return (
-    <div className="task_modal">
-      <div className="createTaskModal_container">
-        <div className="createTaskModal_heading">
+    <div
+      className={
+        !isMobile ? "task_modal" : "mobile_view_task_modal task_modal"
+      }>
+      <div
+        className={
+          !isMobile
+            ? "createTaskModal_container"
+            : "moblie_view_createTaskModal_container createTaskModal_container"
+        }>
+        <div
+          className={
+            !isMobile
+              ? "createTaskModal_heading"
+              : "moblie_view_createTaskModal_heading createTaskModal_heading"
+          }>
           <p>{data ? "Edit Task" : "Create Task"}</p>
           <img src={close} alt="close_icons" onClick={closeModal}></img>
         </div>
-        <hr className="divider" />
+        <div className="divider" />
         <div className="createTaskModal_body">
           <input
             type="text"
@@ -139,7 +160,10 @@ const AddTaskModal = () => {
             </div>
           </div>
 
-          <div className="task_type">
+          <div
+            className={
+              !isMobile ? "task_type" : "mobile_view_task_type task_type"
+            }>
             <div className="taskCategory_box">
               <p>
                 Task Category<sup>*</sup>
@@ -172,11 +196,15 @@ const AddTaskModal = () => {
               <p required>
                 Due on<sup>*</sup>
               </p>
-              <input
-                type="date"
-                className="task_btn"
-                value={currentDate}
-                onChange={selectDate}></input>
+
+              <DatePicker
+                selected={currentDate}
+                dateFormat="dd / MM / yyyy"
+                onChange={(currentDate) => selectDate(currentDate)}
+                placeholderText="DD / MM / YY"
+                showIcon
+                calendarIconClassName="calendarIcon-add"
+              />
             </div>
             <div className="taskStatu">
               <p>

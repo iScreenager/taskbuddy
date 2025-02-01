@@ -2,19 +2,16 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  
-
+  margin-bottom: 5px;
 }
-/* .logo_header {
-  /* background-color: aqua; */
 
 .logo {
   display: flex;
   align-items: center;
+  margin-right: 12px;
 }
 .logo p {
   margin: 0;
-  margin-left: 12px;
   color: #2f2f2f;
   font-size: 24px;
   font-weight: 500;
@@ -44,6 +41,9 @@
   cursor: pointer;
   border-bottom: 2px solid black;
 }
+.activeTab {
+  border-bottom: 2px solid black;
+}
 
 .profile_header {
   display: flex;
@@ -55,13 +55,13 @@
   cursor: pointer;
 }
 .profile img {
-  margin-right: 5px;
   width: 36px;
   height: 36px;
   border-radius: 50%;
 }
 .profile p {
   margin: 0;
+  margin-left: 5px;
   font-weight: bold;
   font-size: 16px;
   color: #464545;
@@ -86,8 +86,7 @@
   width: 15px;
   height: 11px;
 }
-.logout_btn:hover{
+.logout_btn:hover {
   cursor: pointer;
   box-shadow: 1px 2px 2px #fac3ff;
 }
-

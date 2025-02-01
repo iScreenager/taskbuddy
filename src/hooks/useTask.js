@@ -7,8 +7,9 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../components/firebase";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { TaskContext } from "../context/TaskContext";
+import { getSortedData } from "../utils/getSortedData";
 
 export const useTask = ({ fetchOnLoad = false } = {}) => {
   const {
@@ -20,16 +21,15 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     setSelectedTaskCard,
     storeCheckedId,
     setStoreCheckedId,
+    isLoading,
+    setIsLoading,
   } = useContext(TaskContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAsc, setIsAsc] = useState(false);
 
   const addTask = async (taskObj) => {
     setIsLoading(true);
     try {
       await addDoc(collection(db, "tasks"), taskObj);
       setShowAddModal(false);
-      setIsLoading(false);
       getTasks();
     } catch (error) {
       console.error("Error adding task:", error.message);
@@ -43,15 +43,16 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
         ...doc.data(),
         id: doc.id,
       }));
-
-      setTaskData(tasks);
+      const sortedData = getSortedData(tasks, false);
+      setTaskData([...sortedData]);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
   };
 
   const deleteTasks = async (taskId = null) => {
-    console.log("id", taskId);
+    setIsLoading(true);
     try {
       if (taskId) {
         const taskDoc = doc(db, "tasks", taskId);
@@ -74,6 +75,7 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
   };
 
   const updateTasks = async (editTaskData, taskId) => {
+    setIsLoading(true);
     try {
       if (taskId) {
         const taskDoc = doc(db, "tasks", taskId);
@@ -101,21 +103,8 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     setSelectedTaskCard("");
   };
 
-  const compareFun = (task1, task2) => {
-    return new Date(task1.dueDate) - new Date(task2.dueDate);
-  };
-
-  const sortTaskData = () => {
-    const sortedData = [...taskData].sort((task1, task2) =>
-      isAsc ? compareFun(task1, task2) : compareFun(task2, task1)
-    );
-    setIsAsc(!isAsc);
-    setTaskData(sortedData);
-  };
-
   useEffect(() => {
     if (fetchOnLoad) {
-      console.log("first");
       getTasks();
     }
   }, [fetchOnLoad]);
@@ -140,7 +129,6 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     addTask,
     deleteTasks,
     updateTasks,
-    sortTaskData,
     editTask,
   };
 };

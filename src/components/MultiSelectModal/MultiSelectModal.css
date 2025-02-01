@@ -7,9 +7,8 @@
   background-color: #1a1c20;
   position: absolute;
   top: 90%;
-  left: 40%;
   border: 1px solid #1a1c20;
-  border-radius: 12px;
+  border-radius: 20px;
 }
 
 .info_select_box {
@@ -30,8 +29,7 @@
   display: flex;
   align-items: center;
 
-  gap: 8px;
-  padding: 5px 13px;
+  padding: 5px 0px 5px 13px;
   color: #ffffff;
   border: 0.5px solid #ffffff;
   border-radius: 12px;
@@ -40,6 +38,7 @@
   width: 8px;
   height: 8px;
   cursor: pointer;
+  padding: 5px 13px;
 }
 .selected_task_count .close_btn:hover {
   width: 9px;

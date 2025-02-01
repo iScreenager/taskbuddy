@@ -8,8 +8,10 @@ import Green_circle_checkBox from "../../assets/Green_circle_checkBox.png";
 import EditStatusOption from "../EditStatusOption/EditStatusOption.js";
 import { useTask } from "../../hooks/useTask.js";
 import { TaskContext } from "../../context/TaskContext.js";
+import { useIsMobile } from "../../hooks/useIsMobile.js";
 
 const NewTaskCard = (props) => {
+  const { isMobile } = useIsMobile();
   const { deleteTasks, editTask } = useTask();
   const { setStoreCheckedId, storeCheckedId } = useContext(TaskContext);
   const { taskName, dueDate, status, category, id } = props?.taskData;
@@ -30,14 +32,19 @@ const NewTaskCard = (props) => {
   return (
     <div className="task_card">
       <div className="first_task_box">
-        <div className="addTask card">
+        <div
+          className={
+            !isMobile ? "addTask card" : "moblie-view-addTask addTask card"
+          }>
           <input
             type="checkbox"
             checked={storeCheckedId.includes(id)}
             className="square-checkbox"
             onClick={() => handleCheckBoxClick(id)}
           />
-          <img src={DragDrop_icon} className="drag_handler" alt="Icon" />
+          {!isMobile && (
+            <img src={DragDrop_icon} className="drag_handler" alt="Icon" />
+          )}
           <img
             src={
               status === "Completed" ? Green_circle_checkBox : circle_checkBox
@@ -50,21 +57,27 @@ const NewTaskCard = (props) => {
             {status === "Completed" ? <s>{taskName}</s> : taskName}
           </p>
         </div>
-        <div className="duedate card">{dueDate}</div>
-        <div
-          className="taskStatus card"
-          onClick={() => setSelectedStatusTaskId(id)}>
-          <p className="taskStatus_option">{status}</p>
-          {showEditStatusModal && <EditStatusOption id={id} />}
-        </div>
+        {!isMobile && (
+          <>
+            <div className="duedate card">{dueDate}</div>
+            <div
+              className="taskStatus card"
+              onClick={() => setSelectedStatusTaskId(id)}>
+              <p className="taskStatus_option">{status}</p>
+              {showEditStatusModal && <EditStatusOption id={id} />}
+            </div>
 
-        <div className="taskCategory card">{category}</div>
+            <div className="taskCategory card">{category}</div>
+          </>
+        )}
       </div>
+
       <div
         className="modify_task_btn card"
         onClick={() => setSelectedTaskId(id)}>
         <img src={Edit_Delete_icon} alt="option icon"></img>
       </div>
+
       {showEditModal && (
         <EditDeleteControl
           editTask={() => editTask(props.taskData)}

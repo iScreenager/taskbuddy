@@ -1,12 +1,14 @@
 .task_card {
   background-color: #f1f1f1;
   width: 100%;
-  height: 48px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1.5px solid #d9d9d9;
   position: relative;
+  box-sizing: border-box;
+  padding: 0px 10px;
 }
 .first_task_box {
   width: 95%;
@@ -19,7 +21,6 @@
   display: flex;
   align-items: center;
   width: 40%;
-  padding-left: 10px;
   gap: 10px;
 }
 .square-checkbox {
@@ -53,6 +54,12 @@
   display: flex;
   cursor: pointer;
 }
+.task-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 30px;
+}
 .taskStatus .taskStatus_option {
   border: 1px #dddadd;
   background-color: #dddadd;
@@ -71,4 +78,11 @@
 }
 .square-checkbox {
   accent-color: #7b1984;
+}
+
+.moblie-view-addTask {
+  width: 100%;
+}
+.moblie-view-addTask .task-name {
+  font-size: 14px;
 }

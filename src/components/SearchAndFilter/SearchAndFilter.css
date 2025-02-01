@@ -1,43 +1,38 @@
 .main_container {
   width: 100%;
-  /* background-color: aquamarine; */
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
-
-  /* align-items: center; */
-  /* justify-items: center; */
+  align-items: center;
+  row-gap: 10px;
+  flex-wrap: wrap;
 }
 .filter_container {
-  /* background-color: blue;
-  */
   display: flex;
   align-items: center;
-  margin-right: 50px;
-}
-.category {
-  margin-left: 10px;
-}
-.dueDate {
-  margin-left: 10px;
+  position: relative;
+  gap: 8px;
 }
 
 .filter_text {
   display: block;
   font-size: 12px;
-  color: red;
   margin: 0;
   font-weight: 500;
+}
+.filter_option_box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .filter_dropDown {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   border: 1px solid #868080;
   border-radius: 60px;
   height: 30px;
   width: 90px;
+  box-sizing: border-box;
   gap: 5px;
 }
 .filter_container p {
@@ -54,16 +49,16 @@
 .search_container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .search_box {
   display: flex;
   align-items: center;
   border-radius: 60px;
   border: 0.5px solid #868080;
-  width: 204px;
   height: 36px;
   margin-right: 10px;
-  padding: 6px 10px;
+  padding: 0px 10px;
 }
 .search_box input {
   border: 0;
@@ -77,16 +72,12 @@
 
 .addTask_btn {
   border-radius: 60px;
-  width: 152px;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #7b1984;
   border: 0.25px solid #fac3ff;
   font-weight: bold;
   font-size: 14px;
   color: white;
+  padding: 9px 17px;
 }
 .addTask_btn:hover {
   box-shadow: 1px 2px 2px #241e2aa9;
@@ -96,4 +87,59 @@
 .category:hover,
 .dueDate:hover {
   box-shadow: 0px 1px 3px rgb(192, 185, 185);
+}
+
+.main_container-moblie-view {
+  flex-direction: column;
+  align-items: normal;
+}
+.main_container-moblie-view .filter_container {
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: start;
+}
+.main_container-moblie-view .search_container {
+  width: 100%;
+  flex-wrap: wrap;
+}
+.main_container-moblie-view .search_box {
+  flex: 1;
+}
+.main_container-moblie-view .addTask_btn {
+  font-size: 10px;
+}
+
+.reset {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 4px;
+}
+
+.reset p {
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.calendarIcon {
+  width: 10px !important;
+  height: 12px !important;
+  top: 2%;
+  left: 73%;
+}
+
+.dueDate {
+  width: 120px;
+  padding-left: 7px !important;
+  cursor: pointer;
+}
+
+.customCalendar {
+  border: 1px solid #868080;
+  border-radius: 60px;
+  outline: none !important;
+  display: flex;
+  align-self: flex-start;
 }

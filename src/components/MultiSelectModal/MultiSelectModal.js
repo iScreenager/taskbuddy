@@ -7,10 +7,20 @@ import { useTask } from "../../hooks/useTask";
 import EditStatusOption from "../EditStatusOption/EditStatusOption";
 
 const MultiSelectModal = () => {
-  const { storeCheckedId, setStoreCheckedId } = useContext(TaskContext);
+  const { storeCheckedId, setStoreCheckedId, taskData } =
+    useContext(TaskContext);
   const { deleteTasks } = useTask();
   const [showMultiSelectStatusModal, setShowMultiSelectStatusModal] =
     useState(false);
+
+  const handleMultiChecked = () => {
+    if (storeCheckedId.length !== taskData.length) {
+      setStoreCheckedId(taskData.map((task) => task.id));
+    } else {
+      setStoreCheckedId([]);
+    }
+  };
+
   return (
     <div className="multiSelectModal_container">
       <div className="info_select_box">
@@ -22,7 +32,7 @@ const MultiSelectModal = () => {
             onClick={() => setStoreCheckedId([])}
             alt="cross icons"></img>
         </div>
-        <img src={select_icon}></img>
+        <img src={select_icon} onClick={handleMultiChecked}></img>
       </div>
       <div className="multiSelect_btn">
         <button

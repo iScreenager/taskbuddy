@@ -11,8 +11,16 @@ export const TaskContext = createContext({
   setAddModalData: () => {},
   selectedTaskCard: undefined,
   setSelectedTaskCard: () => {},
-  storeCheckedId: [],
-  setStoreCheckedId: undefined,
+  storeCheckedId: undefined,
+  setStoreCheckedId: () => {},
+  filteredCategory: undefined,
+  setFilteredCategory: () => {},
+  searchField: undefined,
+  setSearchField: () => {},
+  isLoading: undefined,
+  setIsLoading: () => {},
+  filteredDate: undefined,
+  setFilteredDate: () => {},
 });
 
 export const TaskProvider = ({ children }) => {
@@ -22,6 +30,11 @@ export const TaskProvider = ({ children }) => {
   const [addModalData, setAddModalData] = useState(null);
   const [selectedTaskCard, setSelectedTaskCard] = useState("");
   const [storeCheckedId, setStoreCheckedId] = useState([]);
+  const [filteredCategory, setFilteredCategory] = useState(null);
+  const [filteredDate, setFilteredDate] = useState(null);
+  const [searchField, setSearchField] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <TaskContext.Provider
       value={{
@@ -37,6 +50,14 @@ export const TaskProvider = ({ children }) => {
         setSelectedTaskCard,
         storeCheckedId,
         setStoreCheckedId,
+        filteredCategory,
+        setFilteredCategory,
+        filteredDate,
+        setFilteredDate,
+        searchField,
+        setSearchField,
+        isLoading,
+        setIsLoading,
       }}>
       {children}
     </TaskContext.Provider>
