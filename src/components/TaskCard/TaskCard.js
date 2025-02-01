@@ -13,7 +13,14 @@ const TaskCard = (props) => {
   const cardClassName = props.cardName
     .toLowerCase() // Convert to lowercase
     .replace(/\s+/g, "-");
-  const { cardName, tasks, setSelectedTaskCard, showEditDeleteModal } = props;
+  const {
+    cardName,
+    tasks,
+    setSelectedTaskCard,
+    showEditDeleteModal,
+    isOpen,
+    setIsOpen,
+  } = props;
 
   const [filteredData, setFilteredData] = useState([]);
 
@@ -66,48 +73,51 @@ const TaskCard = (props) => {
         <p>
           {cardName} {`(${filteredData.length})`}
         </p>
-        <img src={dropDown_up_icons}></img>
+        <img src={dropDown_up_icons} onClick={() => setIsOpen(cardName)}></img>
       </div>
-      <div className="task_body">
-        {!isMobile && props.cardName.toLowerCase() === "todo" && (
-          <div className="add_task_btn ">
-            <img src={addTask_icon} alt="Add Task icon"></img>
-            <p>ADD TASK</p>
-          </div>
-        )}
-        {filteredData.length === 0 ? (
-          <div
-            style={{
-              height: "100px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}>
-            <p>No Tasks in {cardName}</p>
-          </div>
-        ) : (
-          <div className="task_container">
-            {filteredData.map((task, _) => {
-              return (
-                <NewTaskCard
-                  key={task.id}
-                  taskData={task}
-                  showEditModal={
-                    showEditDeleteModal && task.id === selectedTaskId
-                  }
-                  showEditStatusModal={
-                    showEditDeleteModal && task.id === selectedStatusTaskId
-                  }
-                  setSelectedTaskId={(id) => handleModalShow(id)}
-                  setSelectedStatusTaskId={(id) =>
-                    handleShowEditStatusModal(id)
-                  }
-                />
-              );
-            })}
-          </div>
-        )}
-      </div>
+      {isOpen && (
+        <div className="task_body">
+          {!isMobile && props.cardName.toLowerCase() === "todo" && (
+            <div className="add_task_btn ">
+              <img src={addTask_icon} alt="Add Task icon"></img>
+              <p>ADD TASK</p>
+            </div>
+          )}
+
+          {filteredData.length === 0 ? (
+            <div
+              style={{
+                height: "100px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+              <p>No Tasks in {cardName}</p>
+            </div>
+          ) : (
+            <div className="task_container">
+              {filteredData.map((task, _) => {
+                return (
+                  <NewTaskCard
+                    key={task.id}
+                    taskData={task}
+                    showEditModal={
+                      showEditDeleteModal && task.id === selectedTaskId
+                    }
+                    showEditStatusModal={
+                      showEditDeleteModal && task.id === selectedStatusTaskId
+                    }
+                    setSelectedTaskId={(id) => handleModalShow(id)}
+                    setSelectedStatusTaskId={(id) =>
+                      handleShowEditStatusModal(id)
+                    }
+                  />
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

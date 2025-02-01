@@ -11,6 +11,22 @@ const List = () => {
     useContext(TaskContext);
 
   const { isMobile } = useIsMobile();
+  const [openedTasks, setOpenedTasks] = useState([
+    "Todo",
+    "In-Progress",
+    "Completed",
+  ]);
+
+  const handleOpenedTaskCards = (cardName) => {
+    if (openedTasks.includes(cardName)) {
+      const openTask = openedTasks.filter(
+        (openedCardName) => openedCardName !== cardName
+      );
+      setOpenedTasks([...openTask]);
+    } else {
+      setOpenedTasks((prev) => [...prev, cardName]);
+    }
+  };
 
   return (
     <div className="cardTask_coontainer">
@@ -32,6 +48,8 @@ const List = () => {
             tasks={card.tasks}
             setSelectedTaskCard={(cardName) => setSelectedTaskCard(cardName)} // Todo
             showEditDeleteModal={card.cardName === selectedTaskCard} // Todo
+            isOpen={openedTasks.includes(card.cardName)}
+            setIsOpen={(cardName) => handleOpenedTaskCards(cardName)}
           />
         ))}
       </div>
