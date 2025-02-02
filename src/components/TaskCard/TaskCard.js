@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../../context/TaskContext";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { getFormattedDate } from "../../utils/getFormattedDate";
+import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 
 const TaskCard = (props) => {
   const { isMobile } = useIsMobile();
@@ -26,6 +27,7 @@ const TaskCard = (props) => {
 
   const { filteredCategory, filteredDate, searchField } =
     useContext(TaskContext);
+  const { handleDrop, handleDragOver } = useDragAndDrop();
 
   useEffect(() => {
     let filtered = tasks;
@@ -68,12 +70,19 @@ const TaskCard = (props) => {
   };
 
   return (
-    <div className="task_card_body">
+    <div
+      className="task_card_body"
+      onDrop={(e) => handleDrop(e, cardName)}
+      onDragOver={(e) => handleDragOver(e)}
+      draggable>
       <div className={`title_container ${cardClassName}`}>
         <p>
           {cardName} {`(${filteredData.length})`}
         </p>
-        <img src={dropDown_up_icons} onClick={() => setIsOpen(cardName)}></img>
+        <img
+          src={dropDown_up_icons}
+          onClick={() => setIsOpen(cardName)}
+          alt="drop down icon"></img>
       </div>
       {isOpen && (
         <div className="task_body">

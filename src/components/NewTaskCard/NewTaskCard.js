@@ -9,11 +9,14 @@ import EditStatusOption from "../EditStatusOption/EditStatusOption.js";
 import { useTask } from "../../hooks/useTask.js";
 import { TaskContext } from "../../context/TaskContext.js";
 import { useIsMobile } from "../../hooks/useIsMobile.js";
+import { useDragAndDrop } from "../../hooks/useDragAndDrop.js";
 
 const NewTaskCard = (props) => {
   const { isMobile } = useIsMobile();
   const { deleteTasks, editTask } = useTask();
   const { setStoreCheckedId, storeCheckedId } = useContext(TaskContext);
+  const { handleDragStart, handleDragEnd } = useDragAndDrop();
+
   const { taskName, dueDate, status, category, id } = props?.taskData;
   const {
     setSelectedTaskId,
@@ -29,8 +32,13 @@ const NewTaskCard = (props) => {
       setStoreCheckedId([...storeCheckedId, taskId]);
     }
   };
+
   return (
-    <div className="task_card">
+    <div
+      className="task_card"
+      onDragStart={(e) => handleDragStart(e, id)}
+      onDragEnd={handleDragEnd}
+      draggable>
       <div className="first_task_box">
         <div
           className={
