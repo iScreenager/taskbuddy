@@ -219,8 +219,8 @@ const AddTaskModal = () => {
                 <option value="" disabled selected>
                   Choose
                 </option>
-                <option value="Todo">ToDo</option>
-                <option value="InProgress">In-progress</option>
+                <option value="Todo">Todo</option>
+                <option value="In-Progress">In-progress</option>
                 <option value="Completed">Completed</option>
               </select>
             </div>

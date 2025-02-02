@@ -116,7 +116,7 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
   useEffect(() => {
     const todoTasks = taskData?.filter((task) => task.status === "Todo") ?? [];
     const inProgressTasks =
-      taskData?.filter((task) => task.status === "InProgress") ?? [];
+      taskData?.filter((task) => task.status === "In-Progress") ?? [];
     const completedTasks =
       taskData?.filter((task) => task.status === "Completed") ?? [];
     const cards = [
