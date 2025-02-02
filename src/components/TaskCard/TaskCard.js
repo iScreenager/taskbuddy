@@ -11,9 +11,7 @@ import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 
 const TaskCard = (props) => {
   const { isMobile } = useIsMobile();
-  const cardClassName = props.cardName
-    .toLowerCase() // Convert to lowercase
-    .replace(/\s+/g, "-");
+  const cardClassName = props.cardName.toLowerCase().replace(/\s+/g, "-");
   const {
     cardName,
     tasks,

@@ -13,7 +13,6 @@ import { useDragAndDrop } from "../../hooks/useDragAndDrop.js";
 
 const NewTaskCard = (props) => {
   const { isMobile } = useIsMobile();
-  const { deleteTasks, editTask } = useTask();
   const { setStoreCheckedId, storeCheckedId } = useContext(TaskContext);
   const { handleDragStart, handleDragEnd } = useDragAndDrop();
 
@@ -86,12 +85,7 @@ const NewTaskCard = (props) => {
         <img src={Edit_Delete_icon} alt="option icon"></img>
       </div>
 
-      {showEditModal && (
-        <EditDeleteControl
-          editTask={() => editTask(props.taskData)}
-          deleteTask={() => deleteTasks(id)}
-        />
-      )}
+      {showEditModal && <EditDeleteControl taskData={props.taskData} />}
     </div>
   );
 };
