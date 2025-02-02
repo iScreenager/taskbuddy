@@ -10,6 +10,7 @@ import { db } from "../components/firebase";
 import { useContext, useEffect } from "react";
 import { TaskContext } from "../context/TaskContext";
 import { getSortedData } from "../utils/getSortedData";
+import { getFormattedDate } from "../utils/getFormattedDate";
 
 export const useTask = ({ fetchOnLoad = false } = {}) => {
   const {
@@ -24,6 +25,9 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     isLoading,
     setIsLoading,
     userData,
+    filteredCategory,
+    filteredDate,
+    searchField,
   } = useContext(TaskContext);
   const addTask = async (taskObj) => {
     setIsLoading(true);
@@ -114,18 +118,33 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
   }, [fetchOnLoad]);
 
   useEffect(() => {
-    const todoTasks = taskData?.filter((task) => task.status === "Todo") ?? [];
+    let filtered = taskData;
+    if (filteredCategory) {
+      filtered = filtered?.filter((task) => task.category === filteredCategory);
+    }
+    if (filteredDate) {
+      const formattedDate = getFormattedDate(filteredDate);
+      filtered = filtered?.filter((task) => task.dueDate === formattedDate);
+    }
+    if (searchField) {
+      filtered = filtered?.filter((task) =>
+        task.taskName.toLowerCase().includes(searchField.toLowerCase())
+      );
+    }
+
+    const todoTasks = filtered?.filter((task) => task.status === "Todo") ?? [];
     const inProgressTasks =
-      taskData?.filter((task) => task.status === "In-Progress") ?? [];
+      filtered?.filter((task) => task.status === "In-Progress") ?? [];
     const completedTasks =
-      taskData?.filter((task) => task.status === "Completed") ?? [];
+      filtered?.filter((task) => task.status === "Completed") ?? [];
     const cards = [
       { cardName: "Todo", tasks: todoTasks },
       { cardName: "In-Progress", tasks: inProgressTasks },
       { cardName: "Completed", tasks: completedTasks },
     ];
+
     setCardData(cards);
-  }, [taskData]);
+  }, [taskData, filteredCategory, filteredDate, searchField]);
 
   return {
     getTasks,

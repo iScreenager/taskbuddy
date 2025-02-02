@@ -21,28 +21,8 @@ const TaskCard = (props) => {
     setIsOpen,
   } = props;
 
-  const [filteredData, setFilteredData] = useState([]);
-
-  const { filteredCategory, filteredDate, searchField } =
-    useContext(TaskContext);
   const { handleDrop, handleDragOver } = useDragAndDrop();
 
-  useEffect(() => {
-    let filtered = tasks;
-    if (filteredCategory) {
-      filtered = filtered.filter((task) => task.category === filteredCategory);
-    }
-    if (filteredDate) {
-      const formattedDate = getFormattedDate(filteredDate);
-      filtered = filtered.filter((task) => task.dueDate === formattedDate);
-    }
-    if (searchField) {
-      filtered = filtered.filter((task) =>
-        task.taskName.toLowerCase().includes(searchField.toLowerCase())
-      );
-    }
-    setFilteredData([...filtered]);
-  }, [filteredCategory, filteredDate, searchField, tasks]);
 
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [selectedStatusTaskId, setSelectedStatusTaskId] = useState(null);
@@ -75,7 +55,7 @@ const TaskCard = (props) => {
       draggable>
       <div className={`title_container ${cardClassName}`}>
         <p>
-          {cardName} {`(${filteredData.length})`}
+          {cardName} {`(${tasks.length})`}
         </p>
         <img
           src={dropDown_up_icons}
@@ -91,7 +71,7 @@ const TaskCard = (props) => {
             </div>
           )}
 
-          {filteredData.length === 0 ? (
+          {tasks.length === 0 ? (
             <div
               style={{
                 height: "100px",
@@ -103,7 +83,7 @@ const TaskCard = (props) => {
             </div>
           ) : (
             <div className="task_container">
-              {filteredData.map((task, _) => {
+              {tasks.map((task, _) => {
                 return (
                   <NewTaskCard
                     key={task.id}

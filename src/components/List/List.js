@@ -46,8 +46,8 @@ const List = () => {
             key={card.cardName}
             cardName={card.cardName}
             tasks={card.tasks}
-            setSelectedTaskCard={(cardName) => setSelectedTaskCard(cardName)} // Todo
-            showEditDeleteModal={card.cardName === selectedTaskCard} // Todo
+            setSelectedTaskCard={(cardName) => setSelectedTaskCard(cardName)} 
+            showEditDeleteModal={card.cardName === selectedTaskCard} 
             isOpen={openedTasks.includes(card.cardName)}
             setIsOpen={(cardName) => handleOpenedTaskCards(cardName)}
           />
