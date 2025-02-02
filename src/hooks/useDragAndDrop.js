@@ -2,8 +2,9 @@ import { useTask } from "./useTask";
 
 export const useDragAndDrop = () => {
   const { updateTasks } = useTask();
-  const handleDragStart = (e, taskId) => {
+  const handleDragStart = (e, taskId, taskStatus) => {
     e.dataTransfer.setData("taskId", taskId.toString());
+    e.dataTransfer.setData("taskStatus", taskStatus.toString());
   };
   const handleDragEnd = (e) => {
     e.dataTransfer.clearData();
@@ -14,7 +15,10 @@ export const useDragAndDrop = () => {
 
   const handleDrop = (e, status) => {
     const taskId = e.dataTransfer.getData("taskId");
-    updateTasks({ status }, taskId);
+    const taskStatus = e.dataTransfer.getData("taskStatus");
+    if (taskStatus !== status) {
+      updateTasks({ status }, taskId);
+    }
   };
 
   return {

@@ -36,7 +36,7 @@ const NewTaskCard = (props) => {
   return (
     <div
       className="task_card"
-      onDragStart={(e) => handleDragStart(e, id)}
+      onDragStart={(e) => handleDragStart(e, id, status)}
       onDragEnd={handleDragEnd}
       draggable>
       <div className="first_task_box">
