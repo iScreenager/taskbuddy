@@ -50,7 +50,12 @@ const NewTaskCard = (props) => {
             onClick={() => handleCheckBoxClick(id)}
           />
           {!isMobile && (
-            <img src={DragDrop_icon} className="drag_handler" alt="Icon" />
+            <img
+              src={DragDrop_icon}
+              className="drag_handler"
+              alt="Icon"
+              
+            />
           )}
           <img
             src={
@@ -58,6 +63,7 @@ const NewTaskCard = (props) => {
             }
             className="circle-checkbox"
             alt="Icon"
+            draggable="false"
           />
 
           <p className="task-name">
@@ -82,7 +88,7 @@ const NewTaskCard = (props) => {
       <div
         className="modify_task_btn card"
         onClick={() => setSelectedTaskId(id)}>
-        <img src={Edit_Delete_icon} alt="option icon"></img>
+        <img src={Edit_Delete_icon} alt="option icon" draggable="false"></img>
       </div>
 
       {showEditModal && <EditDeleteControl taskData={props.taskData} />}

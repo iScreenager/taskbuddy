@@ -31,15 +31,24 @@ const Login = () => {
       className="login-container"
       style={isMobile ? { justifyContent: "center" } : {}}>
       {isMobile && (
-        <img className="login_bg" src={login} alt="background_img" />
+        <img
+          className="login_bg"
+          src={login}
+          alt="background_img"
+          draggable="false"
+        />
       )}
 
-      {!isMobile && <img className="circle_bg" src={circleBg} />}
-      {!isMobile && <img className="dummy_img" src={dummyImg} />}
+      {!isMobile && (
+        <img className="circle_bg" src={circleBg} draggable="false" />
+      )}
+      {!isMobile && (
+        <img className="dummy_img" src={dummyImg} draggable="false" />
+      )}
 
       <div className={isMobile ? "login-box-moblie-view" : "login-box"}>
         <div className="logo-container">
-          <img src={logo} height={28} width={22} alt="Logo" />
+          <img src={logo} height={28} width={22} alt="Logo" draggable="false" />
           <p className="logo-text">TaskBuddy</p>
         </div>
         <p className="login-param">
@@ -47,7 +56,7 @@ const Login = () => {
           all-in-one task management app.
         </p>
         <button className="login-btn" onClick={googleSign}>
-          <img src={google} alt="icon" />
+          <img src={google} alt="icon" draggable="false" />
           <p
             style={{ margin: 0, marginLeft: 10, fontSize: isMobile ? 14 : 18 }}>
             Continue with Google

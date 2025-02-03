@@ -26,3 +26,6 @@
 .task_category {
   width: 20%;
 }
+.due_date:hover{
+  cursor: pointer;
+}

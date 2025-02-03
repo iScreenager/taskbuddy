@@ -20,6 +20,7 @@ const BoardNewTaskCard = ({ task }) => {
           src={Edit_Delete_icon}
           onClick={() => setShowEditModal(!showEditModal)}
           alt="edit delete icon"
+          draggable="false"
         />
         {showEditModal && (
           <div className="edit_modal">

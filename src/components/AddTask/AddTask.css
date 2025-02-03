@@ -1,0 +1,97 @@
+.add_task_card {
+  background-color: #f1f1f1;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border-bottom: 1.5px solid #d9d9d9;
+  box-sizing: border-box;
+  padding: 1% 0 2% 3%;
+  box-sizing: border-box;
+}
+.add_Task_btn {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 37%;
+}
+
+.title_holder {
+  border-style: none;
+  background-color: #f1f1f1;
+  font-size: 14px;
+  outline: none;
+}
+.add_btn {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.add-btn-task {
+  border: 1px solid #000000;
+  border-radius: 60px;
+  padding: 5px 15px;
+  background-color: #7b1984;
+  color: #f1f1f1;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 2px 2px 0.5px #d9d9d9;
+}
+.add-btn-task:hover {
+  cursor: pointer;
+  font-size: 15px;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.263);
+}
+.cancel_task_btn {
+  border-style: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+.cancel_task_btn:hover {
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.add_due_date {
+  width: 20%;
+  display: flex;
+  gap: 0;
+}
+.due-Date {
+  width: 109px;
+  padding-left: 30px !important;
+  font-size: 12px;
+  cursor: pointer;
+}
+.due-Date:hover {
+  box-shadow: 2px 1px #d9d9d9;
+}
+.cirle {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.cirle:hover {
+  box-shadow: 1px 1px #d9d9d9;
+}
+.cirle p {
+  font-weight: 400;
+}
+.status {
+  width: 16%;
+  position: relative;
+}
+.catgeroy {
+  width: 16%;
+  position: relative;
+}

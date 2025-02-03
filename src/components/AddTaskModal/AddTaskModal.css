@@ -319,3 +319,6 @@ select {
   box-shadow: 1px 2px 2px #241e2aa9;
   cursor: pointer;
 }
+.hidden {
+  display: none;
+}

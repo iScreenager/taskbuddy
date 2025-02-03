@@ -9,13 +9,13 @@ const EditDeleteControl = (props) => {
   return (
     <div className="editDelete_Options">
       <div className="edit_option" onClick={() => editTask(props.taskData)}>
-        <img src={Edit_icon} alt="Edit task icon"></img>
+        <img src={Edit_icon} alt="Edit task icon" draggable="false" />
         <p>Edit</p>
       </div>
       <div
         className="delete_option"
         onClick={() => deleteTasks(props.taskData.id)}>
-        <img src={Delete_icon} alt="Delete task icon"></img>
+        <img src={Delete_icon} alt="Delete task icon" draggable="false" />
         <p>Delete</p>
       </div>
     </div>

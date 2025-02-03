@@ -69,7 +69,7 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
       } else if (storeCheckedId.length > 0) {
         console.log(storeCheckedId);
         const deletePromises = storeCheckedId.map((id) => {
-          const taskDoc = doc(db, "tasks", id);
+          const taskDoc = doc(db, "tasks", userData.uid, "userTasks", id);
           return deleteDoc(taskDoc);
         });
         await Promise.all(deletePromises);
@@ -92,7 +92,7 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
         setAddModalData(null);
       } else if (storeCheckedId.length > 0) {
         const updatePromises = storeCheckedId.map((id) => {
-          const taskDoc = doc(db, "tasks", id);
+          const taskDoc = doc(db, "tasks", userData.uid, "userTasks", id);
           return setDoc(taskDoc, editTaskData, { merge: true });
         });
         await Promise.all(updatePromises);

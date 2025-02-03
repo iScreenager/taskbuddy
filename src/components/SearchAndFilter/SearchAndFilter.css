@@ -112,23 +112,21 @@
 
 .reset {
   display: flex;
-  align-items: flex-end;
-  padding-bottom: 4px;
-}
-
-.reset p {
-  color: black;
-  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #868080;
+  border-radius: 60px;
+  gap: 8px;
+  padding: 4px 10px 4px 10px;
   cursor: pointer;
-  font-size: 12px;
-  text-decoration: underline;
 }
-
-.calendarIcon {
-  width: 10px !important;
-  height: 12px !important;
-  top: 2%;
-  left: 73%;
+.reset p {
+  margin: 0;
+  padding: 0;
+  color: #868080;
+}
+.reset:hover {
+  box-shadow: 0px 1px 3px rgb(192, 185, 185);
 }
 
 .dueDate {

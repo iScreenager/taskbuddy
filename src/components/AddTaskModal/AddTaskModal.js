@@ -3,7 +3,7 @@ import close from "../../assets/close_icon.png";
 import Descriptions from "../../assets/Descriptions.png";
 import number_points from "../../assets/number_points.png";
 import bullet_ponits from "../../assets/bullet_points.png";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Warning from "../Warning/Warning";
 import { useTask } from "../../hooks/useTask";
 import Loader from "../Loader/Loader";
@@ -12,6 +12,8 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getFormattedDate } from "../../utils/getFormattedDate";
+import { useDragAndDrop } from "../../hooks/useDragAndDrop";
+import Calender from "../../assets/Calender.png";
 
 const AddTaskModal = () => {
   const { addTask, updateTasks } = useTask();
@@ -22,16 +24,18 @@ const AddTaskModal = () => {
     addModalData: data,
     isLoading,
   } = useContext(TaskContext);
+  const { handleDragOver } = useDragAndDrop();
 
   const [count, setCount] = useState(0);
   const [isBold, setIsBold] = useState(false);
   const [taskName, setTaskName] = useState(data?.taskName ?? "");
   const [currentCategory, setCurrentCategory] = useState(data?.category ?? "");
-  const [currentDate, setCurrentDate] = useState(data?.dueDate ?? "");
+  const [currentDate, setCurrentDate] = useState(data?.dueDate ?? new Date());
   const [currentStatus, setCurrentStatus] = useState(data?.status ?? "");
   const [showWarning, setShowWarning] = useState("");
   const [description, setDescription] = useState(data?.description ?? "");
-  const [uploadFile, setUploadFile] = useState(null);
+  const [uploadFile, setUploadFile] = useState(data?.uploadFile ?? null);
+  const datePickerRef = useRef(null);
 
   const selectCategory = (category) => {
     setCurrentCategory(category);
@@ -41,15 +45,10 @@ const AddTaskModal = () => {
     const formattedDate = getFormattedDate(date);
     setCurrentDate(formattedDate);
   };
-  const selectTaskStatus = (e) => {
-    setCurrentStatus(e.target.value);
-  };
+
   const selectDescription = (e) => {
     setCount(e.target.value.length);
     setDescription(e.target.value);
-  };
-  const selectUploadFile = (e) => {
-    setUploadFile(e.target.files[0]);
   };
 
   function handelResult() {
@@ -79,7 +78,7 @@ const AddTaskModal = () => {
       dueDate: currentDate,
       status: currentStatus,
       category: currentCategory,
-      uploadFile: uploadFile,
+      uploadFile: uploadFile.name,
     };
 
     data ? updateTasks(taskObj, data.id) : addTask(taskObj);
@@ -88,6 +87,23 @@ const AddTaskModal = () => {
   const closeModal = () => {
     setAddModalData(null);
     setShowAddModal(false);
+  };
+
+  const [preview, setPreview] = useState(null);
+  const handleFileSelect = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setUploadFile(selectedFile);
+    }
+  };
+  const handleDropfile = (event) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files[0];
+    if (droppedFile) {
+      setUploadFile(droppedFile);
+      const filePreview = URL.createObjectURL(droppedFile);
+      setPreview(filePreview);
+    }
   };
 
   return (
@@ -108,7 +124,12 @@ const AddTaskModal = () => {
               : "moblie_view_createTaskModal_heading createTaskModal_heading"
           }>
           <p>{data ? "Edit Task" : "Create Task"}</p>
-          <img src={close} alt="close_icons" onClick={closeModal}></img>
+          <img
+            src={close}
+            alt="close_icons"
+            onClick={closeModal}
+            draggable="false"
+          />
         </div>
         <div className="divider" />
         <div className="createTaskModal_body">
@@ -122,14 +143,17 @@ const AddTaskModal = () => {
 
           <div className="description_container">
             <div className="description_input_container">
-              <img src={Descriptions} alt="Description Icon" />
+              <img
+                src={Descriptions}
+                alt="Description Icon"
+                draggable="false"
+              />
               <textarea
                 placeholder="Description"
                 maxLength="300"
                 rows="6"
                 value={description}
-                onChange={selectDescription}
-                style={{ fontWeight: isBold ? "bold" : "normal" }}></textarea>
+                onChange={selectDescription}></textarea>
             </div>
             <div className="description_style_container">
               <div className="description_style_icons">
@@ -147,11 +171,13 @@ const AddTaskModal = () => {
                   src={number_points}
                   className="description_numPoint"
                   alt="Number Points"
+                  draggable="false"
                 />
                 <img
                   src={bullet_ponits}
                   className="description_bulletPoint"
                   alt="Bullet Points"
+                  draggable="false"
                 />
               </div>
               <span className="description_letters_count">
@@ -196,15 +222,26 @@ const AddTaskModal = () => {
               <p required>
                 Due on<sup>*</sup>
               </p>
-
-              <DatePicker
-                selected={currentDate}
-                dateFormat="dd / MM / yyyy"
-                onChange={(currentDate) => selectDate(currentDate)}
-                placeholderText="DD / MM / YY"
-                showIcon
-                calendarIconClassName="calendarIcon-add"
-              />
+              <div className="date" style={{ position: "relative" }}>
+                <DatePicker
+                  ref={datePickerRef}
+                  selected={currentDate}
+                  dateFormat="dd / MM / yyyy"
+                  onChange={(currentDate) => selectDate(currentDate)}
+                  placeholderText="DD / MM / YY"
+                />
+                <img
+                  src={Calender}
+                  style={{
+                    position: "absolute",
+                    left: "140px",
+                    top: "10px",
+                  }}
+                  alt="calender icon"
+                  draggable="false"
+                  onClick={() => datePickerRef.current.setFocus()}
+                />
+              </div>
             </div>
             <div className="taskStatu">
               <p>
@@ -214,7 +251,7 @@ const AddTaskModal = () => {
                 id="options"
                 name="options"
                 value={currentStatus}
-                onChange={selectTaskStatus}
+                onChange={(e) => setCurrentStatus(e.target.value)}
                 required>
                 <option value="" disabled selected>
                   Choose
@@ -227,16 +264,34 @@ const AddTaskModal = () => {
           </div>
           <div className="attachment">
             <p>Attachment</p>
-            <div id="dropzone" className="dropzone">
+            <div
+              id="dropzone"
+              className="dropzone"
+              onDragOver={handleDragOver}
+              onDrop={handleDropfile}>
               <p>
                 Drop your files here or{" "}
-                <a href="#" className="update-link">
+                <label
+                  htmlFor="fileInput"
+                  className="update-link text-blue-600 cursor-pointer">
                   Update
-                </a>
+                </label>
               </p>
+              <input
+                id="fileInput"
+                type="file"
+                className="hidden"
+                onChange={handleFileSelect}
+              />
             </div>
           </div>
-          <div className="drop_file"></div>
+          <div className="drop_file mt-4 p-4 border border-gray-300 rounded">
+            {uploadFile ? (
+              <p>{uploadFile.name}</p>
+            ) : (
+              <p className="text-gray-500">No file uploaded.</p>
+            )}
+          </div>
         </div>
 
         <div className="createTaskModal_footer">

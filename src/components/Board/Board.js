@@ -19,6 +19,7 @@ const Board = () => {
           key={card.cardName}
           cardName={card.cardName}
           tasks={card.tasks}
+          
         />
       ))}
     </div>

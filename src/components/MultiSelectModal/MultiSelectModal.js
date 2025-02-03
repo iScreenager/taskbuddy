@@ -30,9 +30,15 @@ const MultiSelectModal = () => {
             src={white_close_icon}
             className="close_btn"
             onClick={() => setStoreCheckedId([])}
-            alt="cross icons"></img>
+            alt="cross icons"
+            draggable="false"></img>
         </div>
-        <img src={select_icon} onClick={handleMultiChecked}></img>
+        <img
+          src={select_icon}
+          onClick={handleMultiChecked}
+          draggable="false"
+          alt="check box"
+        />
       </div>
       <div className="multiSelect_btn">
         <button

@@ -16,7 +16,7 @@ const TaskHeading = () => {
     <div className="task_heading">
       <div className="task_name">Task name</div>
       <div className="due_date" onClick={() => sortData()}>
-        Due on<img src={sort}></img>
+        Due on<img src={sort} draggable="false"></img>
       </div>
       <div className="task_status">Task Status</div>
       <div className="task_category">Task Category</div>

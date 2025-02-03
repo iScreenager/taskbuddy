@@ -1,15 +1,18 @@
 import "./SearchAndFilter.css";
 import dropDown_down_icons from "../../assets/dropDown_down_icons.png";
 import search_icon from "../../assets/search_icon.png";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { TaskContext } from "../../context/TaskContext";
 import Category from "../Category/Category";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Calendar from "../../assets/Calender.png";
+import reset_icon from "../../assets/reset_icon.png";
 
 const SearchAndFilter = () => {
   const { isMobile } = useIsMobile();
+  const datePickerRef = useRef(null);
   const {
     setShowAddModal,
     setFilteredCategory,
@@ -35,20 +38,37 @@ const SearchAndFilter = () => {
             className="filter_dropDown category"
             onClick={() => setIsCategory(!isCategory)}>
             <p>{filteredCategory ?? "Category"}</p>
-            <img src={dropDown_down_icons}></img>
+            <img src={dropDown_down_icons} draggable="false"></img>
             {isCategory && <Category />}
           </div>
-          <DatePicker
-            className="filter_dropDown dueDate"
-            selected={filteredDate}
-            dateFormat="dd / MM / yyyy"
-            onChange={(currentDate) => {
-              setFilteredDate(currentDate);
-            }}
-            placeholderText={filteredDate ? "" : "Select Date"}
-            showIcon
-            calendarIconClassName="calendarIcon"
-          />
+          <div style={{ position: "relative" }}>
+            <DatePicker
+              ref={datePickerRef}
+              className="filter_dropDown dueDate"
+              selected={filteredDate}
+              dateFormat="dd / MM / yyyy"
+              onChange={(currentDate) => {
+                setFilteredDate(currentDate);
+              }}
+              placeholderText={filteredDate ? "" : "Select Date"}
+            />
+            <img
+              src={Calendar}
+              style={{
+                position: "absolute",
+                width: "12px",
+                height: "12px",
+                right: "10px",
+                top: "8px",
+                cursor: "pointer",
+              }}
+              alt="calender icon"
+              className="calendar_icon"
+              draggable="false"
+              onClick={() => datePickerRef.current.setFocus()}
+            />
+          </div>
+
           <div
             className="reset"
             onClick={() => {
@@ -56,13 +76,18 @@ const SearchAndFilter = () => {
               setFilteredDate(null);
               setSearchField(null);
             }}>
+            
+            <img
+              src={reset_icon}
+              style={{ width: "15px", height: "15px" }}
+              alt="reset icon"></img>
             <p>Reset</p>
           </div>
         </div>
       </div>
       <div className="search_container">
         <div className="search_box">
-          <img src={search_icon}></img>
+          <img src={search_icon} draggable="false"></img>
           <input
             type="text"
             value={searchField ?? ""}

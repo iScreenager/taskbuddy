@@ -2,12 +2,11 @@ import "./TaskCard.css";
 import dropDown_up_icons from "../../assets/dropDown_up_icons.png";
 import NewTaskCard from "../NewTaskCard/NewTaskCard";
 import addTask_icon from "../../assets/addTask_icon.png";
-
-import { useContext, useEffect, useState } from "react";
-import { TaskContext } from "../../context/TaskContext";
+import dropDown_down_icon from "../../assets/dropDown_down_icons.png";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { getFormattedDate } from "../../utils/getFormattedDate";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
+import { useState } from "react";
+import AddTask from "../AddTask/AddTask";
 
 const TaskCard = (props) => {
   const { isMobile } = useIsMobile();
@@ -22,7 +21,6 @@ const TaskCard = (props) => {
   } = props;
 
   const { handleDrop, handleDragOver } = useDragAndDrop();
-
 
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [selectedStatusTaskId, setSelectedStatusTaskId] = useState(null);
@@ -46,6 +44,7 @@ const TaskCard = (props) => {
     }
     setSelectedTaskCard(cardName);
   };
+  const [isOpenAddTask, setIsOpenAddTask] = useState(false);
 
   return (
     <div
@@ -57,20 +56,38 @@ const TaskCard = (props) => {
         <p>
           {cardName} {`(${tasks.length})`}
         </p>
-        <img
-          src={dropDown_up_icons}
-          onClick={() => setIsOpen(cardName)}
-          alt="drop down icon"></img>
+        {isOpen ? (
+          <img
+            style={{ cursor: "pointer" }}
+            src={dropDown_up_icons}
+            onClick={() => setIsOpen(cardName)}
+            alt="drop down icon"
+            draggable="false"></img>
+        ) : (
+          <img
+            style={{ cursor: "pointer" }}
+            src={dropDown_down_icon}
+            onClick={() => setIsOpen(cardName)}
+            alt="drop down icon"
+            draggable="false"></img>
+        )}
       </div>
       {isOpen && (
         <div className="task_body">
           {!isMobile && props.cardName.toLowerCase() === "todo" && (
-            <div className="add_task_btn ">
-              <img src={addTask_icon} alt="Add Task icon"></img>
+            <div
+              className="add_task_btn "
+              onClick={() => setIsOpenAddTask(!isOpenAddTask)}>
+              <img
+                src={addTask_icon}
+                alt="Add Task icon"
+                draggable="false"></img>
               <p>ADD TASK</p>
             </div>
           )}
-
+          {!isMobile &&
+            props.cardName.toLowerCase() === "todo" &&
+            isOpenAddTask && <AddTask setIsOpenAddTask={setIsOpenAddTask} />}
           {tasks.length === 0 ? (
             <div
               style={{

@@ -52,7 +52,9 @@ const Header = (props) => {
         }>
         <div className="logo_header">
           <div className="logo">
-            {!isMobile && <img src={logo_home} alt="logo"></img>}
+            {!isMobile && (
+              <img src={logo_home} alt="logo" draggable="false"></img>
+            )}
             <p style={isMobile ? { fontSize: "18px", fontWeight: "bold" } : {}}>
               TaskBuddy
             </p>
@@ -62,13 +64,13 @@ const Header = (props) => {
               <div
                 className={`list menu ${isActiveTab === "/list" ? "activeTab" : ""}`}
                 onClick={() => navigate("list")}>
-                <img src={list_icon} alt="list"></img>
+                <img src={list_icon} alt="list" draggable="false"></img>
                 <p>List</p>
               </div>
               <div
                 className={`board menu ${isActiveTab === "/board" ? "activeTab" : ""}`}
                 onClick={() => navigate("board")}>
-                <img src={board_icon} alt="board"></img>
+                <img src={board_icon} alt="board" draggable="false"></img>
                 <p>Board</p>
               </div>
             </div>
@@ -76,12 +78,12 @@ const Header = (props) => {
         </div>
         <div className="profile_header">
           <div className="profile">
-            <img src={photoURL}></img>
+            <img src={photoURL} draggable="false"></img>
             {!isMobile && <p>{displayName.split(" ")[0]}</p>}
           </div>
           {!isMobile && (
             <div className="logout_btn" onClick={logoutUser}>
-              <img src={logout_icon} alt="logout"></img>
+              <img src={logout_icon} alt="logout" draggable="false"></img>
               <p>Logout</p>
             </div>
           )}

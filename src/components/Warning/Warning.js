@@ -25,6 +25,7 @@ const Warning = (props) => {
         src={close}
         alt="close"
         className="close_icon"
+        draggable="false"
       />
       <div className="progress"></div>
     </div>
