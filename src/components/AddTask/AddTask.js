@@ -57,7 +57,8 @@ const AddTask = ({ setIsOpenAddTask }) => {
           onChange={(currentDate) => selectDate(currentDate)}
           placeholderText="Add task"
           className="filter_dropDown due-Date"
-          placement="topStart"
+          popperPlacement="bottom-start"
+          portalId="root"
         />
 
         <img

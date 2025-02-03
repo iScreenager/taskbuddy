@@ -53,6 +53,7 @@
   align-items: center;
   border-bottom: 1.5px solid #d9d9d9;
   cursor: pointer;
+  position: relative;
 }
 .add_task_btn img {
   width: 14px;
