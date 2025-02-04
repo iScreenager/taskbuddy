@@ -29,7 +29,9 @@ const AddTaskModal = () => {
   const [isBold, setIsBold] = useState(false);
   const [taskName, setTaskName] = useState(data?.taskName ?? "");
   const [currentCategory, setCurrentCategory] = useState(data?.category ?? "");
-  const [currentDate, setCurrentDate] = useState(data?.dueDate ?? new Date());
+  const [currentDate, setCurrentDate] = useState(
+    data?.dueDate ?? getFormattedDate(new Date())
+  );
   const [currentStatus, setCurrentStatus] = useState(data?.status ?? "");
   const [showWarning, setShowWarning] = useState("");
   const [description, setDescription] = useState(data?.description ?? "");
