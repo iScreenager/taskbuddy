@@ -5,8 +5,9 @@ import addTask_icon from "../../assets/addTask_icon.png";
 import dropDown_down_icon from "../../assets/dropDown_down_icons.png";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AddTask from "../AddTask/AddTask";
+import { TaskContext } from "../../context/TaskContext";
 
 const TaskCard = (props) => {
   const { isMobile } = useIsMobile();
@@ -24,7 +25,7 @@ const TaskCard = (props) => {
 
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [selectedStatusTaskId, setSelectedStatusTaskId] = useState(null);
-
+  const [isOpenAddTask, setIsOpenAddTask] = useState(false);
   const handleShowEditModal = (taskId) => {
     if (selectedTaskId === taskId) {
       setSelectedTaskId(null);
@@ -44,7 +45,6 @@ const TaskCard = (props) => {
     }
     setSelectedTaskCard(cardName);
   };
-  const [isOpenAddTask, setIsOpenAddTask] = useState(false);
 
   return (
     <div
@@ -87,7 +87,12 @@ const TaskCard = (props) => {
           )}
           {!isMobile &&
             props.cardName.toLowerCase() === "todo" &&
-            isOpenAddTask && <AddTask setIsOpenAddTask={setIsOpenAddTask} />}
+            isOpenAddTask && (
+              <AddTask
+                setIsOpenAddTask={setIsOpenAddTask}
+                isOpenAddTask={isOpenAddTask}
+              />
+            )}
           {tasks.length === 0 ? (
             <div
               style={{

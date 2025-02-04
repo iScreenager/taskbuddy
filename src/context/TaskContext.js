@@ -23,6 +23,8 @@ export const TaskContext = createContext({
   setFilteredDate: () => {},
   userData: undefined,
   setUserData: () => {},
+  isCategoryModalOpen: undefined,
+  setIsCategoryModalOpen: () => {},
 });
 
 export const TaskProvider = ({ children }) => {
@@ -37,6 +39,7 @@ export const TaskProvider = ({ children }) => {
   const [searchField, setSearchField] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
   return (
     <TaskContext.Provider
@@ -63,6 +66,9 @@ export const TaskProvider = ({ children }) => {
         setIsLoading,
         userData,
         setUserData,
+        isCategoryModalOpen,
+        setIsCategoryModalOpen,
+       
       }}>
       {children}
     </TaskContext.Provider>

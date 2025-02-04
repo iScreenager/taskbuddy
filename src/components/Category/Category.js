@@ -2,14 +2,16 @@ import { useContext, useState } from "react";
 import "./Category.css";
 import { TaskContext } from "../../context/TaskContext";
 
-const Category = ({ setCategory }) => {
-  const { setFilteredCategory, filteredCategory } = useContext(TaskContext);
+const Category = ({ setCategory, isOpenAddTask }) => {
+  const { setFilteredCategory, isCategoryModalOpen } = useContext(TaskContext);
+
   const [isBold, setIsBold] = useState("");
 
   const handleCategoryClick = (category) => {
-    if (filteredCategory !== null) {
+    if (isCategoryModalOpen) {
       setFilteredCategory(category);
-    } else {
+    }
+    if (isOpenAddTask) {
       setCategory(category);
       setIsBold(category);
     }

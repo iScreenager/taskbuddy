@@ -1,7 +1,7 @@
 import "./SearchAndFilter.css";
 import dropDown_down_icons from "../../assets/dropDown_down_icons.png";
 import search_icon from "../../assets/search_icon.png";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import { TaskContext } from "../../context/TaskContext";
 import Category from "../Category/Category";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -21,8 +21,9 @@ const SearchAndFilter = () => {
     filteredDate,
     searchField,
     setSearchField,
+    isCategoryModalOpen,
+    setIsCategoryModalOpen,
   } = useContext(TaskContext);
-  const [isCategory, setIsCategory] = useState(false);
 
   return (
     <div
@@ -36,10 +37,10 @@ const SearchAndFilter = () => {
         <div className="filter_option_box">
           <div
             className="filter_dropDown category"
-            onClick={() => setIsCategory(!isCategory)}>
+            onClick={() => setIsCategoryModalOpen(!isCategoryModalOpen)}>
             <p>{filteredCategory ?? "Category"}</p>
             <img src={dropDown_down_icons} draggable="false"></img>
-            {isCategory && <Category />}
+            {isCategoryModalOpen && <Category />}
           </div>
           <div style={{ position: "relative" }}>
             <DatePicker
@@ -76,7 +77,6 @@ const SearchAndFilter = () => {
               setFilteredDate(null);
               setSearchField(null);
             }}>
-            
             <img
               src={reset_icon}
               style={{ width: "15px", height: "15px" }}

@@ -8,13 +8,13 @@ import EditStatusOption from "../EditStatusOption/EditStatusOption";
 import Category from "../Category/Category";
 import { useTask } from "../../hooks/useTask";
 
-const AddTask = ({ setIsOpenAddTask }) => {
+const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
   const datePickerRef = useRef(null);
   const { addTask } = useTask();
   const [currentDate, setCurrentDate] = useState("");
-  const [taskName, setTaskName] = useState("");
+  const [taskName, setTaskName] = useState("Task Title");
   const [status, setStatus] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(false);
   const selectDate = (date) => {
     const formattedDate = getFormattedDate(date);
     setCurrentDate(formattedDate);
@@ -34,7 +34,7 @@ const AddTask = ({ setIsOpenAddTask }) => {
       <div className="add_Task_btn">
         <input
           type="text"
-          placeholder="Task Title"
+          placeholder={taskName}
           className="title_holder"
           onChange={(e) => setTaskName(e.target.value)}></input>
         <div className="add_btn">
@@ -99,7 +99,10 @@ const AddTask = ({ setIsOpenAddTask }) => {
             top: "-25px",
             left: "-20px",
           }}>
-          <Category setCategory={(e) => setCategory(e)} />
+          <Category
+            setCategory={(e) => setCategory(e)}
+            isOpenAddTask={isOpenAddTask}
+          />
         </div>
       </div>
     </div>
