@@ -21,6 +21,16 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
   };
 
   const addNewTask = () => {
+    if (
+      !taskName ||
+      taskName === "Task Title" ||
+      !currentDate ||
+      !status ||
+      !category
+    ) {
+      return;
+    }
+
     const taskObj = {
       taskName: taskName,
       dueDate: currentDate,
