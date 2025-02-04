@@ -76,6 +76,7 @@ const SearchAndFilter = () => {
               setFilteredCategory(null);
               setFilteredDate(null);
               setSearchField(null);
+              setIsCategoryModalOpen(false);
             }}>
             <img
               src={reset_icon}

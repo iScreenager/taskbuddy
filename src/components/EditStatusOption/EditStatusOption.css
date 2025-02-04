@@ -5,7 +5,7 @@
   border-radius: 12px;
   border: 1px solid #7b198426;
   position: absolute;
-  z-index: 99999;
+  z-index: 1;
   top: -45px;
   left: 50%;
   overflow: hidden;

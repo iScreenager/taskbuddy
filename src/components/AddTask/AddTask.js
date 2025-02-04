@@ -28,6 +28,7 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
       category: category,
     };
     addTask(taskObj);
+    setIsOpenAddTask(false);
   };
   return (
     <div className="add_task_card" draggable="false">

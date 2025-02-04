@@ -20,12 +20,12 @@ const Category = ({ setCategory, isOpenAddTask }) => {
     <div className="category_option">
       <p
         onClick={() => handleCategoryClick("Work")}
-        style={{ fontWeight: isBold === "Work" ? "bold" : "normal" }}>
+        style={{ fontWeight: isBold === "Work" ? "bold" : "" }}>
         Work
       </p>
       <p
         onClick={() => handleCategoryClick("Personal")}
-        style={{ fontWeight: isBold === "Personal" ? "bold" : "normal" }}>
+        style={{ fontWeight: isBold === "Personal" ? "bold" : "" }}>
         Personal
       </p>
     </div>
