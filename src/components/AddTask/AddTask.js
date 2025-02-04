@@ -87,7 +87,7 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
             position: "absolute",
             left: "40px",
           }}>
-          <EditStatusOption setStatus={(e) => setStatus(e)} />
+          <EditStatusOption setStatus={setStatus} />
         </div>
       </div>
       <div className="catgeroy">

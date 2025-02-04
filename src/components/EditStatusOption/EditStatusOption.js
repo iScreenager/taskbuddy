@@ -11,7 +11,7 @@ const EditStatusOption = ({
   const [isBold, setIsBold] = useState("");
 
   const handleStatusClick = (status) => {
-    if (id !== null) {
+    if (id !== null || isFromMultiSelect) {
       updateTasks({ status }, id);
     } else {
       setStatus(status);
@@ -28,7 +28,7 @@ const EditStatusOption = ({
             key={index}
             value={status}
             onClick={() => handleStatusClick(status)}
-            style={{ fontWeight: isBold === status ? "bold" : "normal" }}>
+            style={{ fontWeight: isBold === status ? "bold" : "" }}>
             {status}
           </p>
         );

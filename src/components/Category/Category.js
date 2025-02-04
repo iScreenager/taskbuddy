@@ -8,7 +8,7 @@ const Category = ({ setCategory, isOpenAddTask }) => {
   const [isBold, setIsBold] = useState("");
 
   const handleCategoryClick = (category) => {
-    if (isCategoryModalOpen) {
+    if (isCategoryModalOpen && !isOpenAddTask) {
       setFilteredCategory(category);
     }
     if (isOpenAddTask) {

@@ -3,7 +3,7 @@ import close from "../../assets/close_icon.png";
 import Descriptions from "../../assets/Descriptions.png";
 import number_points from "../../assets/number_points.png";
 import bullet_ponits from "../../assets/bullet_points.png";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Warning from "../Warning/Warning";
 import { useTask } from "../../hooks/useTask";
 import Loader from "../Loader/Loader";
@@ -12,6 +12,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getFormattedDate } from "../../utils/getFormattedDate";
+import Calendar from "../../assets/Calender.png";
 
 const AddTaskModal = () => {
   const { addTask, updateTasks } = useTask();
@@ -22,6 +23,7 @@ const AddTaskModal = () => {
     addModalData: data,
     isLoading,
   } = useContext(TaskContext);
+  const datePickerRef = useRef(null);
 
   const [count, setCount] = useState(0);
   const [isBold, setIsBold] = useState(false);
@@ -31,7 +33,6 @@ const AddTaskModal = () => {
   const [currentStatus, setCurrentStatus] = useState(data?.status ?? "");
   const [showWarning, setShowWarning] = useState("");
   const [description, setDescription] = useState(data?.description ?? "");
-  const [uploadFile, setUploadFile] = useState(null);
 
   const selectCategory = (category) => {
     setCurrentCategory(category);
@@ -47,9 +48,6 @@ const AddTaskModal = () => {
   const selectDescription = (e) => {
     setCount(e.target.value.length);
     setDescription(e.target.value);
-  };
-  const selectUploadFile = (e) => {
-    setUploadFile(e.target.files[0]);
   };
 
   function handelResult() {
@@ -79,7 +77,6 @@ const AddTaskModal = () => {
       dueDate: currentDate,
       status: currentStatus,
       category: currentCategory,
-      uploadFile: uploadFile,
     };
 
     data ? updateTasks(taskObj, data.id) : addTask(taskObj);
@@ -196,15 +193,26 @@ const AddTaskModal = () => {
               <p required>
                 Due on<sup>*</sup>
               </p>
-
-              <DatePicker
-                selected={currentDate}
-                dateFormat="dd / MM / yyyy"
-                onChange={(currentDate) => selectDate(currentDate)}
-                placeholderText="DD / MM / YY"
-                showIcon
-                calendarIconClassName="calendarIcon-add"
-              />
+              <div className="date" style={{ position: "relative" }}>
+                <DatePicker
+                  ref={datePickerRef}
+                  selected={currentDate}
+                  dateFormat="dd / MM / yyyy"
+                  onChange={(currentDate) => selectDate(currentDate)}
+                  placeholderText="DD / MM / YY"
+                />
+                <img
+                  src={Calendar}
+                  style={{
+                    position: "absolute",
+                    left: "140px",
+                    top: "10px",
+                  }}
+                  alt="calender icon"
+                  draggable="false"
+                  onClick={() => datePickerRef.current.setFocus()}
+                />
+              </div>
             </div>
             <div className="taskStatu">
               <p>
@@ -219,8 +227,8 @@ const AddTaskModal = () => {
                 <option value="" disabled selected>
                   Choose
                 </option>
-                <option value="Todo">ToDo</option>
-                <option value="InProgress">In-progress</option>
+                <option value="Todo">Todo</option>
+                <option value="In-Progress">In-progress</option>
                 <option value="Completed">Completed</option>
               </select>
             </div>
