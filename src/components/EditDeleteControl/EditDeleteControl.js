@@ -23,10 +23,7 @@ const EditDeleteControl = (props) => {
   }, []);
 
   return (
-    <div
-      ref={modalRef}
-      onClick={(e) => e.stopPropagation()}
-      className="editDelete_Options">
+    <div ref={modalRef} className="editDelete_Options">
       <div
         className="edit_option"
         onClick={(e) => {
