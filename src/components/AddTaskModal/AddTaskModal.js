@@ -137,9 +137,7 @@ const AddTaskModal = () => {
                   onClick={() => setIsBold(!isBold)}>
                   B
                 </p>
-                <p className="description_italic" onClick>
-                  /
-                </p>
+                <p className="description_italic">/</p>
                 <p className="description_cut">Ꞩ</p>
                 <p className="description_divider">|</p>
                 <img
