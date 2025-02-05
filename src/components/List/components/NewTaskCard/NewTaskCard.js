@@ -85,17 +85,17 @@ const NewTaskCard = (props) => {
       <div
         className="modify_task_btn card"
         onClick={(e) => {
+          e.stopPropagation();
           setShowEditModal(true);
         }}>
         <img src={Edit_Delete_icon} alt="option icon" draggable="false"></img>
+        {showEditModal && (
+          <EditDeleteControl
+            closeModal={() => setShowEditModal(false)}
+            taskData={props.taskData}
+          />
+        )}
       </div>
-
-      {showEditModal && (
-        <EditDeleteControl
-          closeModal={() => setShowEditModal(false)}
-          taskData={props.taskData}
-        />
-      )}
     </div>
   );
 };

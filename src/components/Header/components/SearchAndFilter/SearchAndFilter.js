@@ -1,7 +1,7 @@
 import "./SearchAndFilter.css";
 import dropDown_down_icons from "../../../../assets/dropDown_down_icons.png";
 import search_icon from "../../../../assets/search_icon.png";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "../../../../assets/Calender.png";
@@ -13,6 +13,7 @@ import Category from "../Category/Category";
 const SearchAndFilter = () => {
   const { isMobile } = useIsMobile();
   const datePickerRef = useRef(null);
+
   const {
     setShowAddModal,
     setFilteredCategory,
@@ -24,6 +25,13 @@ const SearchAndFilter = () => {
     isCategoryModalOpen,
     setIsCategoryModalOpen,
   } = useContext(TaskContext);
+
+  const resetData = () => {
+    setFilteredCategory(null);
+    setFilteredDate(null);
+    setSearchField(null);
+    setIsCategoryModalOpen(false);
+  };
 
   return (
     <div
@@ -40,7 +48,9 @@ const SearchAndFilter = () => {
             onClick={() => setIsCategoryModalOpen(!isCategoryModalOpen)}>
             <p>{filteredCategory ?? "Category"}</p>
             <img src={dropDown_down_icons} draggable="false"></img>
-            {isCategoryModalOpen && <Category />}
+            {isCategoryModalOpen && (
+              <Category closeModal={() => setIsCategoryModalOpen(false)} />
+            )}
           </div>
           <div style={{ position: "relative" }}>
             <DatePicker
@@ -70,20 +80,15 @@ const SearchAndFilter = () => {
             />
           </div>
 
-          <div
-            className="reset"
-            onClick={() => {
-              setFilteredCategory(null);
-              setFilteredDate(null);
-              setSearchField(null);
-              setIsCategoryModalOpen(false);
-            }}>
-            <img
-              src={reset_icon}
-              style={{ width: "15px", height: "15px" }}
-              alt="reset icon"></img>
-            <p>Reset</p>
-          </div>
+          {(filteredCategory || filteredDate || searchField) && (
+            <div className="reset" onClick={resetData}>
+              <img
+                src={reset_icon}
+                style={{ width: "15px", height: "15px" }}
+                alt="reset icon"></img>
+              <p>Reset</p>
+            </div>
+          )}
         </div>
       </div>
       <div className="search_container">

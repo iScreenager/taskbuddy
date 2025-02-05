@@ -6,6 +6,12 @@
   border-radius: 12px;
   border: 0.5px solid #58575147;
 }
+.board_task_card:active {
+  cursor: grab;
+}
+.board_task_card.dragging {
+  cursor: grabbing;
+}
 .board_card_heading p {
   margin: 0;
   font-size: 16px;

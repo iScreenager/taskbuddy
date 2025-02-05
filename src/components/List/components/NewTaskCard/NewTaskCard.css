@@ -9,13 +9,16 @@
   position: relative;
   box-sizing: border-box;
   padding: 0px 10px;
+  /* cursor: grab; */
+}
+
+.task_card:active {
+  cursor: grabbing;
 }
 .first_task_box {
   width: 95%;
   display: flex;
   align-items: center;
-
-  /* justify-content: space-between; */
 }
 .addTask {
   display: flex;
@@ -25,6 +28,7 @@
 }
 .square-checkbox {
   background-color: aqua;
+  cursor: pointer;
 }
 .checkbox {
   width: 15px;
@@ -43,6 +47,7 @@
   width: 8.5px;
   height: 11.25px;
   margin-right: 4px;
+  cursor: pointer;
 }
 .taskCategory {
   text-align: left;

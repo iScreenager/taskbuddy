@@ -3,27 +3,35 @@ import Edit_icon from "../../assets/Edit_icon.png";
 import Delete_icon from "../../assets/Delete_icon.png";
 import "./EditDeleteControl.css";
 import { useTask } from "../../hooks/useTask";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const EditDeleteControl = (props) => {
+  const { isMobile } = useIsMobile();
   const { deleteTasks, editTask } = useTask();
 
   const modalRef = useRef(null);
 
   const checkClickOutside = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      props.closeModal();
+      setTimeout(() => props.closeModal && props.closeModal(), 100);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", checkClickOutside);
+    document.addEventListener("mousedown", checkClickOutside, true);
     return () => {
-      document.removeEventListener("mousedown", checkClickOutside);
+      document.removeEventListener("mousedown", checkClickOutside, true);
     };
   }, []);
 
   return (
-    <div ref={modalRef} className="editDelete_Options">
+    <div
+      ref={modalRef}
+      className={
+        !isMobile
+          ? "editDelete_Options"
+          : "mobile_view_editDelete_Options editDelete_Options"
+      }>
       <div
         className="edit_option"
         onClick={(e) => {

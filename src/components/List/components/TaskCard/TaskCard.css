@@ -7,10 +7,10 @@
   position: relative;
   margin-top: 10px;
 }
+
 .title_container {
   width: 100%;
   height: 46px;
-  /* background-color: #fac3ff; */
   border-radius: 20px 20px 0 0;
   display: flex;
   align-items: center;
@@ -55,6 +55,7 @@
   cursor: pointer;
   position: relative;
 }
+
 .add_task_btn img {
   width: 14px;
   height: 14px;

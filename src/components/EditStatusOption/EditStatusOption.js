@@ -7,13 +7,13 @@ const EditStatusOption = ({
   id = null,
   isFromMultiSelect = false,
   setStatus,
-  closeModal,
+  closeModal = () => {},
 }) => {
   const modalRef = useRef(null);
 
   const checkClickOutside = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      closeModal();
+      setTimeout(() => closeModal(), 100);
     }
   };
 

@@ -51,7 +51,7 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
         <div className="add_btn">
           <button className="add-btn-task" onClick={addNewTask}>
             ADD
-            <img src={Union} style={{ width: "12px", height: "12px" }}></img>
+            <img src={Union} style={{ width: "12px", height: "12px" }} ></img>
           </button>
           <button
             className="cancel_task_btn"

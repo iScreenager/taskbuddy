@@ -3,12 +3,12 @@
   display: flex;
   flex-direction: column;
   border-radius: 12px;
-  border: 1px solid #7b198426;
-  box-shadow: 2px 2px 10px #7b198426;
+  border: 1px solid #b719c653;
+  box-shadow: 3px 3px 3px #7b198426;
   position: absolute;
   z-index: 1;
-  top: 45px;
-  left: 50px;
+  top: 40px;
+  left: 56px;
   overflow: hidden;
   text-align: left;
 }
@@ -19,7 +19,7 @@
   cursor: pointer;
   text-transform: uppercase;
   background-color: #fff9f9;
-  color: black;
+  color: rgb(0, 0, 0) !important;
 }
 .category_option p:hover {
   font-weight: bold;
