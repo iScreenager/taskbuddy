@@ -1,12 +1,29 @@
 import "./EditStatusOption.css";
 import { useTask } from "../../hooks/useTask";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { taskStatusOptions } from "../../constants";
 
 const EditStatusOption = ({
   id = null,
   isFromMultiSelect = false,
   setStatus,
+  closeModal,
 }) => {
+  const modalRef = useRef(null);
+
+  const checkClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", checkClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", checkClickOutside);
+    };
+  }, []);
+
   const { updateTasks } = useTask();
   const [isBold, setIsBold] = useState("");
 
@@ -19,10 +36,9 @@ const EditStatusOption = ({
     }
   };
 
-  const statusTypes = ["Todo", "In-Progress", "Completed"];
   return (
-    <div className="ChangeStatusOption_box">
-      {statusTypes.map((status, index) => {
+    <div ref={modalRef} className="ChangeStatusOption_box">
+      {taskStatusOptions.map((status, index) => {
         return (
           <p
             key={index}

@@ -1,28 +1,23 @@
 import "./NewTaskCard.css";
-import { useContext } from "react";
-import DragDrop_icon from "../../assets/dragNdrop.png";
-import Edit_Delete_icon from "../../assets/Edit_Delete_icon.png";
-import circle_checkBox from "../../assets/circle_checkBox.png";
-import EditDeleteControl from "../EditDeleteControl/EditDeleteControl.js";
-import Green_circle_checkBox from "../../assets/Green_circle_checkBox.png";
-import EditStatusOption from "../EditStatusOption/EditStatusOption.js";
-import { useTask } from "../../hooks/useTask.js";
-import { TaskContext } from "../../context/TaskContext.js";
-import { useIsMobile } from "../../hooks/useIsMobile.js";
-import { useDragAndDrop } from "../../hooks/useDragAndDrop.js";
+import { useContext, useState } from "react";
+import DragDrop_icon from "../../../../assets/dragNdrop.png";
+import Edit_Delete_icon from "../../../../assets/Edit_Delete_icon.png";
+import circle_checkBox from "../../../../assets/circle_checkBox.png";
+import Green_circle_checkBox from "../../../../assets/Green_circle_checkBox.png";
+import { useIsMobile } from "../../../../hooks/useIsMobile.js";
+import { TaskContext } from "../../../../context/TaskContext.js";
+import EditStatusOption from "../../../EditStatusOption/EditStatusOption.js";
+import EditDeleteControl from "../../../EditDeleteControl/EditDeleteControl.js";
+import { useDragAndDrop } from "../../../../hooks/useDragAndDrop.js";
 
 const NewTaskCard = (props) => {
   const { isMobile } = useIsMobile();
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditStatusModal, setShowEditStatusModal] = useState(false);
   const { setStoreCheckedId, storeCheckedId } = useContext(TaskContext);
   const { handleDragStart, handleDragEnd } = useDragAndDrop();
 
   const { taskName, dueDate, status, category, id } = props?.taskData;
-  const {
-    setSelectedTaskId,
-    showEditModal,
-    setSelectedStatusTaskId,
-    showEditStatusModal,
-  } = props;
   const handleCheckBoxClick = (taskId) => {
     if (storeCheckedId.includes(taskId)) {
       const newCheckedId = storeCheckedId.filter((id) => id !== taskId);
@@ -50,12 +45,7 @@ const NewTaskCard = (props) => {
             onClick={() => handleCheckBoxClick(id)}
           />
           {!isMobile && (
-            <img
-              src={DragDrop_icon}
-              className="drag_handler"
-              alt="Icon"
-              
-            />
+            <img src={DragDrop_icon} className="drag_handler" alt="Icon" />
           )}
           <img
             src={
@@ -73,11 +63,18 @@ const NewTaskCard = (props) => {
         {!isMobile && (
           <>
             <div className="duedate card">{dueDate}</div>
-            <div
-              className="taskStatus card"
-              onClick={() => setSelectedStatusTaskId(id)}>
-              <p className="taskStatus_option">{status}</p>
-              {showEditStatusModal && <EditStatusOption id={id} />}
+            <div className="taskStatus card">
+              <p
+                onClick={() => setShowEditStatusModal(!showEditStatusModal)}
+                className="taskStatus_option">
+                {status}
+              </p>
+              {showEditStatusModal && (
+                <EditStatusOption
+                  closeModal={() => setShowEditStatusModal(false)}
+                  id={id}
+                />
+              )}
             </div>
 
             <div className="taskCategory card">{category}</div>
@@ -87,11 +84,18 @@ const NewTaskCard = (props) => {
 
       <div
         className="modify_task_btn card"
-        onClick={() => setSelectedTaskId(id)}>
+        onClick={(e) => {
+          setShowEditModal(true);
+        }}>
         <img src={Edit_Delete_icon} alt="option icon" draggable="false"></img>
       </div>
 
-      {showEditModal && <EditDeleteControl taskData={props.taskData} />}
+      {showEditModal && (
+        <EditDeleteControl
+          closeModal={() => setShowEditModal(false)}
+          taskData={props.taskData}
+        />
+      )}
     </div>
   );
 };

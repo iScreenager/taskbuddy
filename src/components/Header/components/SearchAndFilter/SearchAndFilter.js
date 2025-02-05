@@ -1,14 +1,14 @@
 import "./SearchAndFilter.css";
-import dropDown_down_icons from "../../assets/dropDown_down_icons.png";
-import search_icon from "../../assets/search_icon.png";
+import dropDown_down_icons from "../../../../assets/dropDown_down_icons.png";
+import search_icon from "../../../../assets/search_icon.png";
 import { useContext, useRef } from "react";
-import { TaskContext } from "../../context/TaskContext";
-import Category from "../Category/Category";
-import { useIsMobile } from "../../hooks/useIsMobile";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Calendar from "../../assets/Calender.png";
-import reset_icon from "../../assets/reset_icon.png";
+import Calendar from "../../../../assets/Calender.png";
+import reset_icon from "../../../../assets/reset_icon.png";
+import { TaskContext } from "../../../../context/TaskContext";
+import { useIsMobile } from "../../../../hooks/useIsMobile";
+import Category from "../Category/Category";
 
 const SearchAndFilter = () => {
   const { isMobile } = useIsMobile();

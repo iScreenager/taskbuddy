@@ -52,6 +52,8 @@
 .taskStatus {
   width: 20%;
   display: flex;
+}
+.taskStatus p {
   cursor: pointer;
 }
 .task-name {

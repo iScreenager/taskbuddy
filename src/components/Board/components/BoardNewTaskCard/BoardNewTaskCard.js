@@ -1,13 +1,14 @@
-import { useState } from "react";
-import Edit_Delete_icon from "../../assets/Edit_Delete_icon.png";
+import { useEffect, useRef, useState } from "react";
+import Edit_Delete_icon from "../../../../assets/Edit_Delete_icon.png";
 import "./BoardNewTaskCard.css";
-import EditDeleteControl from "../EditDeleteControl/EditDeleteControl";
-import { useDragAndDrop } from "../../hooks/useDragAndDrop";
+import EditDeleteControl from "../../../EditDeleteControl/EditDeleteControl";
+import { useDragAndDrop } from "../../../../hooks/useDragAndDrop";
 
 const BoardNewTaskCard = ({ task }) => {
-  const [showEditModal, setShowEditModal] = useState();
+  const [showEditModal, setShowEditModal] = useState(false);
   const { handleDragStart, handleDragEnd } = useDragAndDrop();
   const { taskName, dueDate, category, status, id } = task;
+
   return (
     <div
       className="board_task_card"
@@ -24,7 +25,10 @@ const BoardNewTaskCard = ({ task }) => {
         />
         {showEditModal && (
           <div className="edit_modal">
-            <EditDeleteControl taskData={task} />
+            <EditDeleteControl
+              taskData={task}
+              closeModal={() => setShowEditModal(false)}
+            />
           </div>
         )}
       </div>

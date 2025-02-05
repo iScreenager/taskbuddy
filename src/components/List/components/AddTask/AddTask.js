@@ -1,12 +1,12 @@
 import "./AddTask.css";
-import Union from "../../assets/Union.png";
+import Union from "../../../../assets/Union.png";
 import DatePicker from "react-datepicker";
-import Calendar from "../../assets/Calender.png";
+import Calendar from "../../../../assets/Calender.png";
 import { useRef, useState } from "react";
-import { getFormattedDate } from "../../utils/getFormattedDate";
-import EditStatusOption from "../EditStatusOption/EditStatusOption";
-import Category from "../Category/Category";
-import { useTask } from "../../hooks/useTask";
+import { getFormattedDate } from "../../../../utils/getFormattedDate";
+import EditStatusOption from "../../../EditStatusOption/EditStatusOption";
+import Category from "../../../Header/components/Category/Category";
+import { useTask } from "../../../../hooks/useTask";
 
 const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
   const datePickerRef = useRef(null);

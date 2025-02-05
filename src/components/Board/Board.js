@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import BoardCardBody from "../BoardCardBody/BoardCardBody";
 import { TaskContext } from "../../context/TaskContext";
+import BoardCardBody from "./components/BoardCardBody/BoardCardBody";
 
 const Board = () => {
   const { cardData } = useContext(TaskContext);
@@ -19,7 +19,6 @@ const Board = () => {
           key={card.cardName}
           cardName={card.cardName}
           tasks={card.tasks}
-          
         />
       ))}
     </div>

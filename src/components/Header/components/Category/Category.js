@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import "./Category.css";
-import { TaskContext } from "../../context/TaskContext";
+import { TaskContext } from "../../../../context/TaskContext";
 
 const Category = ({ setCategory, isOpenAddTask }) => {
   const { setFilteredCategory, isCategoryModalOpen } = useContext(TaskContext);

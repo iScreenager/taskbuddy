@@ -1,50 +1,20 @@
 import "./TaskCard.css";
-import dropDown_up_icons from "../../assets/dropDown_up_icons.png";
+import dropDown_up_icons from "../../../../assets/dropDown_up_icons.png";
 import NewTaskCard from "../NewTaskCard/NewTaskCard";
-import addTask_icon from "../../assets/addTask_icon.png";
-import dropDown_down_icon from "../../assets/dropDown_down_icons.png";
-import { useIsMobile } from "../../hooks/useIsMobile";
-import { useDragAndDrop } from "../../hooks/useDragAndDrop";
-import { useContext, useState } from "react";
+import addTask_icon from "../../../../assets/addTask_icon.png";
+import dropDown_down_icon from "../../../../assets/dropDown_down_icons.png";
+import { useIsMobile } from "../../../../hooks/useIsMobile";
+import { useDragAndDrop } from "../../../../hooks/useDragAndDrop";
+import { useState } from "react";
 import AddTask from "../AddTask/AddTask";
-import { TaskContext } from "../../context/TaskContext";
 
 const TaskCard = (props) => {
   const { isMobile } = useIsMobile();
   const cardClassName = props.cardName.toLowerCase().replace(/\s+/g, "-");
-  const {
-    cardName,
-    tasks,
-    setSelectedTaskCard,
-    showEditDeleteModal,
-    isOpen,
-    setIsOpen,
-  } = props;
+  const { cardName, tasks, isExpanded, setIsExpanded } = props;
 
   const { handleDrop, handleDragOver } = useDragAndDrop();
-
-  const [selectedTaskId, setSelectedTaskId] = useState(null);
-  const [selectedStatusTaskId, setSelectedStatusTaskId] = useState(null);
   const [isOpenAddTask, setIsOpenAddTask] = useState(false);
-  const handleShowEditModal = (taskId) => {
-    if (selectedTaskId === taskId) {
-      setSelectedTaskId(null);
-    } else {
-      setSelectedTaskId(taskId);
-    }
-  };
-  const handleModalShow = (id) => {
-    handleShowEditModal(id);
-    setSelectedTaskCard(cardName);
-  };
-  const handleShowEditStatusModal = (id) => {
-    if (selectedStatusTaskId === id) {
-      setSelectedStatusTaskId(null);
-    } else {
-      setSelectedStatusTaskId(id);
-    }
-    setSelectedTaskCard(cardName);
-  };
 
   return (
     <div
@@ -56,23 +26,23 @@ const TaskCard = (props) => {
         <p>
           {cardName} {`(${tasks.length})`}
         </p>
-        {isOpen ? (
+        {isExpanded ? (
           <img
             style={{ cursor: "pointer" }}
             src={dropDown_up_icons}
-            onClick={() => setIsOpen(cardName)}
+            onClick={() => setIsExpanded(cardName)}
             alt="drop down icon"
             draggable="false"></img>
         ) : (
           <img
             style={{ cursor: "pointer" }}
             src={dropDown_down_icon}
-            onClick={() => setIsOpen(cardName)}
+            onClick={() => setIsExpanded(cardName)}
             alt="drop down icon"
             draggable="false"></img>
         )}
       </div>
-      {isOpen && (
+      {isExpanded && (
         <div className="task_body">
           {!isMobile && props.cardName.toLowerCase() === "todo" && (
             <div
@@ -106,22 +76,7 @@ const TaskCard = (props) => {
           ) : (
             <div className="task_container">
               {tasks.map((task, _) => {
-                return (
-                  <NewTaskCard
-                    key={task.id}
-                    taskData={task}
-                    showEditModal={
-                      showEditDeleteModal && task.id === selectedTaskId
-                    }
-                    showEditStatusModal={
-                      showEditDeleteModal && task.id === selectedStatusTaskId
-                    }
-                    setSelectedTaskId={(id) => handleModalShow(id)}
-                    setSelectedStatusTaskId={(id) =>
-                      handleShowEditStatusModal(id)
-                    }
-                  />
-                );
+                return <NewTaskCard key={task.id} taskData={task} />;
               })}
             </div>
           )}

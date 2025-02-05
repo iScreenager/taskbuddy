@@ -6,7 +6,7 @@ import logout_icon from "../../assets/logout_icon.png";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import Loader from "../Loader/Loader";
 import { useIsMobile } from "../../hooks/useIsMobile";
 

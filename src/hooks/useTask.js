@@ -6,11 +6,12 @@ import {
   getDocs,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../components/firebase";
+import { db } from "../firebase";
 import { useContext, useEffect } from "react";
 import { TaskContext } from "../context/TaskContext";
 import { getSortedData } from "../utils/getSortedData";
 import { getFormattedDate } from "../utils/getFormattedDate";
+import { taskStatusOptions } from "../constants";
 
 export const useTask = ({ fetchOnLoad = false } = {}) => {
   const {
@@ -19,7 +20,6 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     setShowAddModal,
     setAddModalData,
     setCardData,
-    setSelectedTaskCard,
     storeCheckedId,
     setStoreCheckedId,
     isLoading,
@@ -108,7 +108,6 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
   const editTask = (editTaskData) => {
     setShowAddModal(true);
     setAddModalData(editTaskData);
-    setSelectedTaskCard("");
   };
 
   useEffect(() => {
@@ -132,16 +131,10 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
       );
     }
 
-    const todoTasks = filtered?.filter((task) => task.status === "Todo") ?? [];
-    const inProgressTasks =
-      filtered?.filter((task) => task.status === "In-Progress") ?? [];
-    const completedTasks =
-      filtered?.filter((task) => task.status === "Completed") ?? [];
-    const cards = [
-      { cardName: "Todo", tasks: todoTasks },
-      { cardName: "In-Progress", tasks: inProgressTasks },
-      { cardName: "Completed", tasks: completedTasks },
-    ];
+    const cards = taskStatusOptions.map((status) => ({
+      cardName: status,
+      tasks: filtered?.filter((task) => task.status === status) ?? [],
+    }));
 
     setCardData(cards);
   }, [taskData, filteredCategory, filteredDate, searchField]);

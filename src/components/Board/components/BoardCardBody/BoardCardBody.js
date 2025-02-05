@@ -1,4 +1,4 @@
-import { useDragAndDrop } from "../../hooks/useDragAndDrop";
+import { useDragAndDrop } from "../../../../hooks/useDragAndDrop";
 import BoardNewTaskCard from "../BoardNewTaskCard/BoardNewTaskCard";
 import "./BoardCardBody.css";
 

@@ -5,7 +5,7 @@ import circleBg from "../../assets/circles_bg.png";
 import dummyImg from "../../assets/login-dummy-img.png";
 import google from "../../assets/google.png";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "../../hooks/useIsMobile";
 

@@ -9,8 +9,6 @@ export const TaskContext = createContext({
   setShowAddModal: () => {},
   addModalData: undefined,
   setAddModalData: () => {},
-  selectedTaskCard: undefined,
-  setSelectedTaskCard: () => {},
   storeCheckedId: undefined,
   setStoreCheckedId: () => {},
   filteredCategory: undefined,
@@ -32,7 +30,6 @@ export const TaskProvider = ({ children }) => {
   const [cardData, setCardData] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [addModalData, setAddModalData] = useState(null);
-  const [selectedTaskCard, setSelectedTaskCard] = useState("");
   const [storeCheckedId, setStoreCheckedId] = useState([]);
   const [filteredCategory, setFilteredCategory] = useState(null);
   const [filteredDate, setFilteredDate] = useState(null);
@@ -52,8 +49,6 @@ export const TaskProvider = ({ children }) => {
         setShowAddModal,
         addModalData,
         setAddModalData,
-        selectedTaskCard,
-        setSelectedTaskCard,
         storeCheckedId,
         setStoreCheckedId,
         filteredCategory,
@@ -68,7 +63,6 @@ export const TaskProvider = ({ children }) => {
         setUserData,
         isCategoryModalOpen,
         setIsCategoryModalOpen,
-       
       }}>
       {children}
     </TaskContext.Provider>

@@ -53,8 +53,17 @@ const MultiSelectModal = () => {
           Delete
         </button>
         {showMultiSelectStatusModal && (
-          <div style={{ position: "absolute", bottom: 90, right: 160 }}>
-            <EditStatusOption isFromMultiSelect={true} />
+          <div
+            style={{
+              position: "absolute",
+              bottom: 90,
+              right: -170,
+              width: "670px",
+            }}>
+            <EditStatusOption
+              closeModal={() => setShowMultiSelectStatusModal(false)}
+              isFromMultiSelect={true}
+            />
           </div>
         )}
       </div>

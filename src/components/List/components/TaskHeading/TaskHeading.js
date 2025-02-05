@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import sort from "../../assets/Sort.png";
+import sort from "../../../../assets/Sort.png";
 import "./TaskHeading.css";
-import { getSortedData } from "../../utils/getSortedData";
-import { TaskContext } from "../../context/TaskContext";
+import { getSortedData } from "../../../../utils/getSortedData";
+import { TaskContext } from "../../../../context/TaskContext";
 
 const TaskHeading = () => {
   const { taskData, setTaskData } = useContext(TaskContext);

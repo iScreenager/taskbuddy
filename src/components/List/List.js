@@ -1,30 +1,25 @@
 import React, { useContext, useState } from "react";
-import TaskHeading from "../TaskHeading/TaskHeading";
-import { useTask } from "../../hooks/useTask";
-import TaskCard from "../TaskCard/TaskCard";
+import TaskCard from "./components/TaskCard/TaskCard";
 import "./List.css";
 import { TaskContext } from "../../context/TaskContext";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import TaskHeading from "./components/TaskHeading/TaskHeading";
+import { taskStatusOptions } from "../../constants";
 
 const List = () => {
-  const { cardData, setSelectedTaskCard, selectedTaskCard } =
-    useContext(TaskContext);
+  const { cardData } = useContext(TaskContext);
 
   const { isMobile } = useIsMobile();
-  const [openedTasks, setOpenedTasks] = useState([
-    "Todo",
-    "In-Progress",
-    "Completed",
-  ]);
+  const [expandedTaskCards, setExpandedTaskCards] = useState(taskStatusOptions);
 
   const handleOpenedTaskCards = (cardName) => {
-    if (openedTasks.includes(cardName)) {
-      const openTask = openedTasks.filter(
+    if (expandedTaskCards.includes(cardName)) {
+      const openTask = expandedTaskCards.filter(
         (openedCardName) => openedCardName !== cardName
       );
-      setOpenedTasks([...openTask]);
+      setExpandedTaskCards([...openTask]);
     } else {
-      setOpenedTasks((prev) => [...prev, cardName]);
+      setExpandedTaskCards((prev) => [...prev, cardName]);
     }
   };
 
@@ -46,10 +41,8 @@ const List = () => {
             key={card.cardName}
             cardName={card.cardName}
             tasks={card.tasks}
-            setSelectedTaskCard={(cardName) => setSelectedTaskCard(cardName)} 
-            showEditDeleteModal={card.cardName === selectedTaskCard} 
-            isOpen={openedTasks.includes(card.cardName)}
-            setIsOpen={(cardName) => handleOpenedTaskCards(cardName)}
+            isExpanded={expandedTaskCards.includes(card.cardName)}
+            setIsExpanded={(cardName) => handleOpenedTaskCards(cardName)}
           />
         ))}
       </div>

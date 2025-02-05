@@ -1,7 +1,6 @@
 import "./Home.css";
 import Header from "../Header/Header.js";
 import { Outlet } from "react-router-dom";
-import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
 import AddTaskModal from "../AddTaskModal/AddTaskModal.js";
 import Loader from "../Loader/Loader.js";
 import { useContext } from "react";
@@ -9,6 +8,7 @@ import MultiSelectModal from "../MultiSelectModal/MultiSelectModal.js";
 import { useTask } from "../../hooks/useTask.js";
 import { useIsMobile } from "../../hooks/useIsMobile.js";
 import { TaskContext } from "../../context/TaskContext.js";
+import SearchAndFilter from "../Header/components/SearchAndFilter/SearchAndFilter.js";
 
 const Home = () => {
   const { userData } = useContext(TaskContext);
