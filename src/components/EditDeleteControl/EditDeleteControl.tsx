@@ -4,16 +4,24 @@ import Delete_icon from "../../assets/Delete_icon.png";
 import "./EditDeleteControl.css";
 import { useTask } from "../../hooks/useTask";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { TaskObjType } from "../../interface";
 
-const EditDeleteControl = (props) => {
+interface EditDeleteControlProps {
+  taskData: TaskObjType;
+  closeModal: () => void;
+}
+const EditDeleteControl = ({
+  taskData,
+  closeModal,
+}: EditDeleteControlProps) => {
   const { isMobile } = useIsMobile();
   const { deleteTasks, editTask } = useTask();
 
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
-  const checkClickOutside = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
-      setTimeout(() => props.closeModal && props.closeModal(), 100);
+  const checkClickOutside = (e: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      setTimeout(() => closeModal(), 100);
     }
   };
 
@@ -36,14 +44,12 @@ const EditDeleteControl = (props) => {
         className="edit_option"
         onClick={(e) => {
           e.stopPropagation();
-          editTask(props.taskData);
+          editTask(taskData);
         }}>
         <img src={Edit_icon} alt="Edit task icon" draggable="false" />
         <p>Edit</p>
       </div>
-      <div
-        className="delete_option"
-        onClick={() => deleteTasks(props.taskData.id)}>
+      <div className="delete_option" onClick={() => deleteTasks(taskData.id)}>
         <img src={Delete_icon} alt="Delete task icon" draggable="false" />
         <p>Delete</p>
       </div>

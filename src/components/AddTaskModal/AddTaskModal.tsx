@@ -3,7 +3,7 @@ import close from "../../assets/close_icon.png";
 import Descriptions from "../../assets/Descriptions.png";
 import number_points from "../../assets/number_points.png";
 import bullet_ponits from "../../assets/bullet_points.png";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Warning from "../Warning/Warning";
 import { useTask } from "../../hooks/useTask";
 import Loader from "../Loader/Loader";
@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getFormattedDate } from "../../utils/getFormattedDate";
 import Calendar from "../../assets/Calender.png";
+import { TaskObjType, TaskStatusOption } from "../../interface";
 
 const AddTaskModal = () => {
   const { addTask, updateTasks } = useTask();
@@ -23,31 +24,36 @@ const AddTaskModal = () => {
     addModalData: data,
     isLoading,
   } = useContext(TaskContext);
-  const datePickerRef = useRef(null);
+  const datePickerRef = useRef<DatePicker | null>(null);
 
-  const [count, setCount] = useState(0);
-  const [isBold, setIsBold] = useState(false);
-  const [taskName, setTaskName] = useState(data?.taskName ?? "");
-  const [currentCategory, setCurrentCategory] = useState(data?.category ?? "");
-  const [currentDate, setCurrentDate] = useState(
-    data?.dueDate ?? getFormattedDate(new Date())
+  const [count, setCount] = useState<number>(0);
+  const [isBold, setIsBold] = useState<boolean>(false);
+  const [taskName, setTaskName] = useState<string>(data?.taskName ?? "");
+  const [currentCategory, setCurrentCategory] = useState<string>(
+    data?.category ?? ""
   );
-  const [currentStatus, setCurrentStatus] = useState(data?.status ?? "");
-  const [showWarning, setShowWarning] = useState("");
-  const [description, setDescription] = useState(data?.description ?? "");
+  const [currentDate, setCurrentDate] = useState<Date | null>(new Date());
+  const [currentStatus, setCurrentStatus] = useState<TaskStatusOption>(
+    data?.status ?? TaskStatusOption.NOSTATUS
+  );
+  const [showWarning, setShowWarning] = useState<string>("");
+  const [description, setDescription] = useState<string>(
+    data?.description ?? ""
+  );
+  const [formattedDate, setFormattedDate] = useState<string>("");
 
-  const selectCategory = (category) => {
+  useEffect(() => {
+    setFormattedDate(getFormattedDate(currentDate));
+  }, [currentDate]);
+
+  const selectCategory = (category: string) => {
     setCurrentCategory(category);
   };
 
-  const selectDate = (date) => {
-    const formattedDate = getFormattedDate(date);
-    setCurrentDate(formattedDate);
+  const selectTaskStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurrentStatus(e.target.value as TaskStatusOption);
   };
-  const selectTaskStatus = (e) => {
-    setCurrentStatus(e.target.value);
-  };
-  const selectDescription = (e) => {
+  const selectDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCount(e.target.value.length);
     setDescription(e.target.value);
   };
@@ -73,10 +79,10 @@ const AddTaskModal = () => {
       return;
     }
 
-    const taskObj = {
+    const taskObj: TaskObjType = {
       taskName: taskName,
       description: description,
-      dueDate: currentDate,
+      dueDate: formattedDate,
       status: currentStatus,
       category: currentCategory,
     };
@@ -124,8 +130,8 @@ const AddTaskModal = () => {
               <img src={Descriptions} alt="Description Icon" />
               <textarea
                 placeholder="Description"
-                maxLength="300"
-                rows="6"
+                maxLength={300}
+                rows={6}
                 value={description}
                 onChange={selectDescription}
                 style={{ fontWeight: isBold ? "bold" : "normal" }}></textarea>
@@ -190,7 +196,7 @@ const AddTaskModal = () => {
             </div>
 
             <div className="taskDueDate">
-              <p required>
+              <p>
                 Due on<sup>*</sup>
               </p>
               <div className="date" style={{ position: "relative" }}>
@@ -198,7 +204,9 @@ const AddTaskModal = () => {
                   ref={datePickerRef}
                   selected={currentDate}
                   dateFormat="dd / MM / yyyy"
-                  onChange={(currentDate) => selectDate(currentDate)}
+                  onChange={(currentDate: Date | null) =>
+                    setCurrentDate(currentDate)
+                  }
                   placeholderText="DD / MM / YY"
                 />
                 <img
@@ -210,7 +218,7 @@ const AddTaskModal = () => {
                   }}
                   alt="calender icon"
                   draggable="false"
-                  onClick={() => datePickerRef.current.setFocus()}
+                  onClick={() => datePickerRef.current?.setFocus()}
                 />
               </div>
             </div>
@@ -227,14 +235,19 @@ const AddTaskModal = () => {
                 <option value="" disabled selected>
                   Choose
                 </option>
-                <option value="Todo">Todo</option>
-                <option value="In-Progress">In-progress</option>
-                <option value="Completed">Completed</option>
+                <option value={TaskStatusOption.TODO}>
+                  {TaskStatusOption.TODO}
+                </option>
+                <option value={TaskStatusOption.INPROGRESS}>
+                  {TaskStatusOption.INPROGRESS}
+                </option>
+                <option value={TaskStatusOption.COMPLETED}>
+                  {TaskStatusOption.COMPLETED}
+                </option>
               </select>
             </div>
           </div>
         </div>
-
         <div className="createTaskModal_footer">
           <button onClick={closeModal} className="cancel_btn">
             CANCEL
@@ -244,10 +257,7 @@ const AddTaskModal = () => {
           </button>
         </div>
         {showWarning && (
-          <Warning
-            message={showWarning}
-            onClose={() => setShowWarning(false)}
-          />
+          <Warning message={showWarning} onClose={() => setShowWarning("")} />
         )}
       </div>
       {isLoading && <Loader />}

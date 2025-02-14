@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import "./Warning.css";
 import close from "../../assets/close_icon.png";
 
-const Warning = (props) => {
+interface WarningProps {
+  message: string;
+  onClose: () => void;
+}
+
+const Warning = ({ message, onClose }: WarningProps) => {
   const [timeCounter, setTimeCounter] = useState(5);
 
   useEffect(() => {
     if (timeCounter === 0) {
-      props.onClose();
+      onClose();
       return;
     }
     const intervalId = setInterval(() => {
@@ -15,13 +20,13 @@ const Warning = (props) => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [props, timeCounter]);
+  }, [onClose, timeCounter]);
 
   return (
     <div className="warning_container">
-      <p>{props.message}</p>
+      <p>{message}</p>
       <img
-        onClick={props.onClose}
+        onClick={onClose}
         src={close}
         alt="close"
         className="close_icon"

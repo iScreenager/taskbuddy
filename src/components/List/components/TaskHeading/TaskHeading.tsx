@@ -6,7 +6,7 @@ import { TaskContext } from "../../../../context/TaskContext";
 
 const TaskHeading = () => {
   const { taskData, setTaskData } = useContext(TaskContext);
-  const [isAsc, setIsAsc] = useState(true);
+  const [isAsc, setIsAsc] = useState<boolean>(true);
   const sortData = () => {
     const sortedData = getSortedData(taskData, isAsc);
     setTaskData([...sortedData]);

@@ -1,11 +1,16 @@
 import { useDragAndDrop } from "../../../../hooks/useDragAndDrop";
 import BoardNewTaskCard from "../BoardNewTaskCard/BoardNewTaskCard";
 import "./BoardCardBody.css";
+import { TaskObjType, TaskStatusOption } from "../../../../interface";
 
-const BoardCardBody = (props) => {
-  const { cardName, tasks } = props;
+interface BoardCardBodyProps {
+  cardName: TaskStatusOption;
+  tasks: TaskObjType[];
+}
+
+const BoardCardBody = ({ cardName, tasks }: BoardCardBodyProps) => {
   const { handleDrop, handleDragOver } = useDragAndDrop();
-  const cardClassName = props.cardName.toLowerCase().replace(/\s+/g, "-");
+  const cardClassName = cardName.toLowerCase().replace(/\s+/g, "-");
   return (
     <div
       className="boardCardBody_box"

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-export const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 778);
+export const useIsMobile = (): { isMobile: boolean } => {
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 778);
 
-  const getMobileSize = () => {
+  const getMobileSize = (): void => {
     setIsMobile(window.innerWidth <= 778);
   };
 

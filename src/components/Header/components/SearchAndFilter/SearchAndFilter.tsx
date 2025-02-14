@@ -12,7 +12,7 @@ import Category from "../Category/Category";
 
 const SearchAndFilter = () => {
   const { isMobile } = useIsMobile();
-  const datePickerRef = useRef(null);
+  const datePickerRef = useRef<DatePicker | null>(null);
 
   const {
     setShowAddModal,
@@ -76,7 +76,7 @@ const SearchAndFilter = () => {
               alt="calender icon"
               className="calendar_icon"
               draggable="false"
-              onClick={() => datePickerRef.current.setFocus()}
+              onClick={() => datePickerRef.current?.setFocus()}
             />
           </div>
 

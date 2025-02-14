@@ -1,18 +1,19 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import Loader from "./components/Loader/Loader.js";
-import Home from "./components/Home/Home.js";
+import Loader from "./components/Loader/Loader";
 import { useNavigate } from "react-router";
-import { TaskContext } from "./context/TaskContext.js";
+import { TaskContext } from "./context/TaskContext";
+import Home from "./components/Home/Home";
+import { UserData } from "./interface";
 
 function App() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const { setUserData } = useContext(TaskContext);
 
   const fetchDataFromLocalStorage = useCallback(() => {
-    const myData = localStorage.getItem("userData");
-    const result = JSON.parse(myData);
-    if (myData !== null) {
+    const myData: string = localStorage.getItem("userData") ?? "";
+    const result: UserData = JSON.parse(myData);
+    if (myData !== "") {
       setLoading(false);
       setUserData(result);
     } else {

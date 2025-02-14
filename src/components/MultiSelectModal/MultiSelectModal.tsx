@@ -5,17 +5,18 @@ import { useContext, useState } from "react";
 import { TaskContext } from "../../context/TaskContext";
 import { useTask } from "../../hooks/useTask";
 import EditStatusOption from "../EditStatusOption/EditStatusOption";
+import { TaskObjType } from "../../interface";
 
 const MultiSelectModal = () => {
   const { storeCheckedId, setStoreCheckedId, taskData } =
     useContext(TaskContext);
   const { deleteTasks } = useTask();
   const [showMultiSelectStatusModal, setShowMultiSelectStatusModal] =
-    useState(false);
+    useState<boolean>(false);
 
   const handleMultiChecked = () => {
     if (storeCheckedId.length !== taskData.length) {
-      setStoreCheckedId(taskData.map((task) => task.id));
+      setStoreCheckedId(taskData.map((task: TaskObjType) => task.id ?? ""));
     } else {
       setStoreCheckedId([]);
     }
@@ -63,6 +64,7 @@ const MultiSelectModal = () => {
             <EditStatusOption
               closeModal={() => setShowMultiSelectStatusModal(false)}
               isFromMultiSelect={true}
+              setStatus={() => {}}
             />
           </div>
         )}

@@ -2,23 +2,32 @@ import "./AddTask.css";
 import Union from "../../../../assets/Union.png";
 import DatePicker from "react-datepicker";
 import Calendar from "../../../../assets/Calender.png";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getFormattedDate } from "../../../../utils/getFormattedDate";
 import EditStatusOption from "../../../EditStatusOption/EditStatusOption";
 import Category from "../../../Header/components/Category/Category";
 import { useTask } from "../../../../hooks/useTask";
+import { TaskObjType, TaskStatusOption } from "../../../../interface";
 
-const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
-  const datePickerRef = useRef(null);
+interface AddTaskProps {
+  setIsOpenAddTask: (isOpen: boolean) => void;
+  isOpenAddTask: boolean;
+}
+
+const AddTask = ({ setIsOpenAddTask, isOpenAddTask }: AddTaskProps) => {
+  const datePickerRef = useRef<DatePicker | null>(null);
   const { addTask } = useTask();
-  const [currentDate, setCurrentDate] = useState("");
-  const [taskName, setTaskName] = useState("Task Title");
-  const [status, setStatus] = useState("");
-  const [category, setCategory] = useState(false);
-  const selectDate = (date) => {
-    const formattedDate = getFormattedDate(date);
-    setCurrentDate(formattedDate);
-  };
+  const [currentDate, setCurrentDate] = useState<Date | null>(null);
+  const [formattedDate, setFormattedDate] = useState<string>("");
+  const [taskName, setTaskName] = useState<string>("Task Title");
+  const [status, setStatus] = useState<TaskStatusOption>(
+    TaskStatusOption.NOSTATUS
+  );
+  const [category, setCategory] = useState<string>("");
+
+  useEffect(() => {
+    setFormattedDate(getFormattedDate(currentDate));
+  }, [currentDate]);
 
   const addNewTask = () => {
     if (
@@ -31,9 +40,9 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
       return;
     }
 
-    const taskObj = {
+    const taskObj: TaskObjType = {
       taskName: taskName,
-      dueDate: currentDate,
+      dueDate: formattedDate,
       status: status,
       category: category,
     };
@@ -51,7 +60,7 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
         <div className="add_btn">
           <button className="add-btn-task" onClick={addNewTask}>
             ADD
-            <img src={Union} style={{ width: "12px", height: "12px" }} ></img>
+            <img src={Union} style={{ width: "12px", height: "12px" }}></img>
           </button>
           <button
             className="cancel_task_btn"
@@ -65,7 +74,7 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
           ref={datePickerRef}
           selected={currentDate}
           dateFormat="dd / MM / yyyy"
-          onChange={(currentDate) => selectDate(currentDate)}
+          onChange={(currentDate: Date | null) => setCurrentDate(currentDate)}
           placeholderText="Add task"
           className="filter_dropDown due-Date"
           popperPlacement="bottom-start"
@@ -85,7 +94,7 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
           alt="calender icon"
           className="calendar_icon"
           draggable="false"
-          onClick={() => datePickerRef.current.setFocus()}
+          onClick={() => datePickerRef.current?.setFocus()}
         />
       </div>
       <div className="status">
@@ -97,7 +106,10 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
             position: "absolute",
             left: "40px",
           }}>
-          <EditStatusOption setStatus={setStatus} />
+          <EditStatusOption
+            setStatus={setStatus}
+            closeModal={() => console.log("Modal closed")}
+          />
         </div>
       </div>
       <div className="catgeroy">
@@ -111,8 +123,9 @@ const AddTask = ({ setIsOpenAddTask, isOpenAddTask }) => {
             left: "-20px",
           }}>
           <Category
-            setCategory={(e) => setCategory(e)}
+            setCategory={(category) => setCategory(category)}
             isOpenAddTask={isOpenAddTask}
+            closeModal={() => {}}
           />
         </div>
       </div>

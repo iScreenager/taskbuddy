@@ -1,17 +1,17 @@
 import "./Home.css";
-import Header from "../Header/Header.js";
+import Header from "../Header/Header";
 import { Outlet } from "react-router-dom";
-import AddTaskModal from "../AddTaskModal/AddTaskModal.js";
-import Loader from "../Loader/Loader.js";
+import AddTaskModal from "../AddTaskModal/AddTaskModal";
+import Loader from "../Loader/Loader";
 import { useContext } from "react";
-import MultiSelectModal from "../MultiSelectModal/MultiSelectModal.js";
-import { useTask } from "../../hooks/useTask.js";
-import { useIsMobile } from "../../hooks/useIsMobile.js";
-import { TaskContext } from "../../context/TaskContext.js";
-import SearchAndFilter from "../Header/components/SearchAndFilter/SearchAndFilter.js";
+import MultiSelectModal from "../MultiSelectModal/MultiSelectModal";
+import { useTask } from "../../hooks/useTask";
+import { useIsMobile } from "../../hooks/useIsMobile";
+import { TaskContext, TaskContextType } from "../../context/TaskContext";
+import SearchAndFilter from "../Header/components/SearchAndFilter/SearchAndFilter";
 
 const Home = () => {
-  const { userData } = useContext(TaskContext);
+  const { userData } = useContext<TaskContextType>(TaskContext);
   useTask({
     fetchOnLoad: true,
   });

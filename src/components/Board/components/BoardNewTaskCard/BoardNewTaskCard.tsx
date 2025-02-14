@@ -3,11 +3,16 @@ import Edit_Delete_icon from "../../../../assets/Edit_Delete_icon.png";
 import "./BoardNewTaskCard.css";
 import EditDeleteControl from "../../../EditDeleteControl/EditDeleteControl";
 import { useDragAndDrop } from "../../../../hooks/useDragAndDrop";
+import { TaskObjType } from "../../../../interface";
 
-const BoardNewTaskCard = ({ task }) => {
-  const [showEditModal, setShowEditModal] = useState(false);
+interface BoardNewTaskCardProps {
+  task: TaskObjType;
+}
+
+const BoardNewTaskCard = ({ task }: BoardNewTaskCardProps) => {
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const { handleDragStart, handleDragEnd } = useDragAndDrop();
-  const { taskName, dueDate, category, status, id } = task;
+  const { taskName, dueDate, category, status, id = "" } = task;
 
   return (
     <div

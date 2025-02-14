@@ -4,21 +4,28 @@ import DragDrop_icon from "../../../../assets/dragNdrop.png";
 import Edit_Delete_icon from "../../../../assets/Edit_Delete_icon.png";
 import circle_checkBox from "../../../../assets/circle_checkBox.png";
 import Green_circle_checkBox from "../../../../assets/Green_circle_checkBox.png";
-import { useIsMobile } from "../../../../hooks/useIsMobile.js";
-import { TaskContext } from "../../../../context/TaskContext.js";
-import EditStatusOption from "../../../EditStatusOption/EditStatusOption.js";
-import EditDeleteControl from "../../../EditDeleteControl/EditDeleteControl.js";
-import { useDragAndDrop } from "../../../../hooks/useDragAndDrop.js";
+import { useIsMobile } from "../../../../hooks/useIsMobile";
+import { TaskContext } from "../../../../context/TaskContext";
+import EditStatusOption from "../../../EditStatusOption/EditStatusOption";
+import EditDeleteControl from "../../../EditDeleteControl/EditDeleteControl";
+import { useDragAndDrop } from "../../../../hooks/useDragAndDrop";
+import { TaskObjType } from "../../../../interface";
 
-const NewTaskCard = (props) => {
+interface NewTaskCardProps {
+  taskData: TaskObjType;
+}
+
+const NewTaskCard = ({ taskData }: NewTaskCardProps) => {
   const { isMobile } = useIsMobile();
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showEditStatusModal, setShowEditStatusModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [showEditStatusModal, setShowEditStatusModal] =
+    useState<boolean>(false);
   const { setStoreCheckedId, storeCheckedId } = useContext(TaskContext);
   const { handleDragStart, handleDragEnd } = useDragAndDrop();
 
-  const { taskName, dueDate, status, category, id } = props?.taskData;
-  const handleCheckBoxClick = (taskId) => {
+  const { taskName, dueDate, status, category, id = "" } = taskData;
+
+  const handleCheckBoxClick = (taskId: string) => {
     if (storeCheckedId.includes(taskId)) {
       const newCheckedId = storeCheckedId.filter((id) => id !== taskId);
       setStoreCheckedId([...newCheckedId]);
@@ -73,6 +80,7 @@ const NewTaskCard = (props) => {
                 <EditStatusOption
                   closeModal={() => setShowEditStatusModal(false)}
                   id={id}
+                  setStatus={() => {}}
                 />
               )}
             </div>
@@ -92,7 +100,7 @@ const NewTaskCard = (props) => {
         {showEditModal && (
           <EditDeleteControl
             closeModal={() => setShowEditModal(false)}
-            taskData={props.taskData}
+            taskData={taskData}
           />
         )}
       </div>

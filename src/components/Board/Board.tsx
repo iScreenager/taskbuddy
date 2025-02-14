@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { TaskContext } from "../../context/TaskContext";
 import BoardCardBody from "./components/BoardCardBody/BoardCardBody";
+import { CardDataType } from "../../interface";
 
 const Board = () => {
-  const { cardData } = useContext(TaskContext);
+  const { cardData } = useContext(TaskContext) as { cardData: CardDataType[] };
   return (
     <div
       style={{

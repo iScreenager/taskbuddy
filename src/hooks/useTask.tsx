@@ -8,10 +8,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useContext, useEffect } from "react";
-import { TaskContext } from "../context/TaskContext";
+import { TaskContext, TaskContextType } from "../context/TaskContext";
 import { getSortedData } from "../utils/getSortedData";
 import { getFormattedDate } from "../utils/getFormattedDate";
 import { taskStatusOptions } from "../constants";
+import { TaskObjType } from "../interface";
 
 export const useTask = ({ fetchOnLoad = false } = {}) => {
   const {
@@ -28,45 +29,52 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     filteredCategory,
     filteredDate,
     searchField,
-  } = useContext(TaskContext);
-  const addTask = async (taskObj) => {
+  } = useContext<TaskContextType>(TaskContext);
+
+  const addTask = async (taskObj: TaskObjType) => {
     setIsLoading(true);
     try {
-      await addDoc(collection(db, "tasks", userData.uid, "userTasks"), taskObj);
-      setShowAddModal(false);
-      getTasks();
-    } catch (error) {
+      if (userData) {
+        await addDoc(
+          collection(db, "tasks", userData.uid, "userTasks"),
+          taskObj
+        );
+        setShowAddModal(false);
+        getTasks();
+      }
+    } catch (error: any) {
       console.error("Error adding task:", error.message);
     }
   };
 
   const getTasks = async () => {
-    console.log("getTasks");
     try {
-      const taskCollections = await getDocs(
-        collection(db, "tasks", userData.uid, "userTasks")
-      );
-      const tasks = taskCollections.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      const sortedData = getSortedData(tasks, false);
-      setTaskData([...sortedData]);
-      setIsLoading(false);
+      if (userData) {
+        const taskCollections = await getDocs(
+          collection(db, "tasks", userData.uid, "userTasks")
+        );
+        const tasks: TaskObjType[] = taskCollections.docs.map((doc) => ({
+          ...(doc.data() as TaskObjType),
+          id: doc.id,
+        }));
+        const sortedData = getSortedData(tasks, false);
+        setTaskData([...sortedData]);
+        setIsLoading(false);
+      }
     } catch (error) {
       setIsLoading(false);
       console.error("Error fetching tasks:", error);
     }
   };
 
-  const deleteTasks = async (taskId = null) => {
+  const deleteTasks = async (taskId: string | null = null) => {
     setIsLoading(true);
     try {
-      if (taskId) {
+      if (taskId && userData) {
         const taskDoc = doc(db, "tasks", userData.uid, "userTasks", taskId);
         await deleteDoc(taskDoc);
         console.log("Single task deleted successfully.");
-      } else if (storeCheckedId.length > 0) {
+      } else if (storeCheckedId.length > 0 && userData) {
         console.log(storeCheckedId);
         const deletePromises = storeCheckedId.map((id) => {
           const taskDoc = doc(db, "tasks", userData.uid, "userTasks", id);
@@ -77,20 +85,23 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
         setStoreCheckedId([]);
       }
       getTasks();
-    } catch (error) {
+    } catch (error: any) {
       console.log("Error Deleting Task", error.message);
     }
   };
 
-  const updateTasks = async (editTaskData, taskId) => {
+  const updateTasks = async (
+    editTaskData: Partial<TaskObjType>,
+    taskId: string | undefined
+  ) => {
     setIsLoading(true);
     try {
-      if (taskId) {
+      if (taskId && userData) {
         const taskDoc = doc(db, "tasks", userData.uid, "userTasks", taskId);
         await setDoc(taskDoc, editTaskData, { merge: true });
         setShowAddModal(false);
         setAddModalData(null);
-      } else if (storeCheckedId.length > 0) {
+      } else if (storeCheckedId.length > 0 && userData) {
         const updatePromises = storeCheckedId.map((id) => {
           const taskDoc = doc(db, "tasks", userData.uid, "userTasks", id);
           return setDoc(taskDoc, editTaskData, { merge: true });
@@ -105,7 +116,7 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
     }
   };
 
-  const editTask = (editTaskData) => {
+  const editTask = (editTaskData: TaskObjType) => {
     setShowAddModal(true);
     setAddModalData(editTaskData);
   };
@@ -119,21 +130,26 @@ export const useTask = ({ fetchOnLoad = false } = {}) => {
   useEffect(() => {
     let filtered = taskData;
     if (filteredCategory) {
-      filtered = filtered?.filter((task) => task.category === filteredCategory);
+      filtered = filtered?.filter(
+        (task: TaskObjType) => task.category === filteredCategory
+      );
     }
     if (filteredDate) {
       const formattedDate = getFormattedDate(filteredDate);
-      filtered = filtered?.filter((task) => task.dueDate === formattedDate);
+      filtered = filtered?.filter(
+        (task: TaskObjType) => task.dueDate === formattedDate
+      );
     }
     if (searchField) {
-      filtered = filtered?.filter((task) =>
+      filtered = filtered?.filter((task: TaskObjType) =>
         task.taskName.toLowerCase().includes(searchField.toLowerCase())
       );
     }
 
     const cards = taskStatusOptions.map((status) => ({
       cardName: status,
-      tasks: filtered?.filter((task) => task.status === status) ?? [],
+      tasks:
+        filtered?.filter((task: TaskObjType) => task.status === status) ?? [],
     }));
 
     setCardData(cards);

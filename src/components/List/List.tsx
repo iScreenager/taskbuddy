@@ -10,9 +10,10 @@ const List = () => {
   const { cardData } = useContext(TaskContext);
 
   const { isMobile } = useIsMobile();
-  const [expandedTaskCards, setExpandedTaskCards] = useState(taskStatusOptions);
+  const [expandedTaskCards, setExpandedTaskCards] =
+    useState<string[]>(taskStatusOptions);
 
-  const handleOpenedTaskCards = (cardName) => {
+  const handleOpenedTaskCards = (cardName: string) => {
     if (expandedTaskCards.includes(cardName)) {
       const openTask = expandedTaskCards.filter(
         (openedCardName) => openedCardName !== cardName
@@ -42,7 +43,9 @@ const List = () => {
             cardName={card.cardName}
             tasks={card.tasks}
             isExpanded={expandedTaskCards.includes(card.cardName)}
-            setIsExpanded={(cardName) => handleOpenedTaskCards(cardName)}
+            setIsExpanded={(cardName: string) =>
+              handleOpenedTaskCards(cardName)
+            }
           />
         ))}
       </div>

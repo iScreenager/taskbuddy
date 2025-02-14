@@ -9,8 +9,13 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import Loader from "../Loader/Loader";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { UserData } from "../../interface";
 
-const Header = (props) => {
+interface HeaderProps {
+  dataApi: UserData | null;
+}
+
+const Header = ({ dataApi }: HeaderProps) => {
   const [isActiveTab, setIsActiveTab] = useState("/list");
   const [isLoading, setIsLoading] = useState(false);
   const { isMobile } = useIsMobile();
@@ -19,7 +24,12 @@ const Header = (props) => {
   }, [window.location.pathname]);
 
   const navigate = useNavigate();
-  const { photoURL, displayName } = props.dataApi;
+
+  if (!dataApi) {
+    return null;
+  }
+
+  const { photoURL, displayName } = dataApi;
 
   const logoutUser = async () => {
     setIsLoading(true);

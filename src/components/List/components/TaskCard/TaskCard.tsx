@@ -7,14 +7,27 @@ import { useIsMobile } from "../../../../hooks/useIsMobile";
 import { useDragAndDrop } from "../../../../hooks/useDragAndDrop";
 import { useState } from "react";
 import AddTask from "../AddTask/AddTask";
+import { TaskObjType, TaskStatusOption } from "../../../../interface";
 
-const TaskCard = (props) => {
+interface TaskCardProps {
+  cardName: TaskStatusOption;
+  tasks: TaskObjType[];
+  isExpanded: boolean;
+  setIsExpanded: (cardName: TaskStatusOption) => void;
+}
+
+const TaskCard = ({
+  cardName,
+  tasks,
+  isExpanded,
+  setIsExpanded,
+}: TaskCardProps) => {
   const { isMobile } = useIsMobile();
-  const cardClassName = props.cardName.toLowerCase().replace(/\s+/g, "-");
-  const { cardName, tasks, isExpanded, setIsExpanded } = props;
+
+  const cardClassName = cardName.toLowerCase().replace(/\s+/g, "-");
 
   const { handleDrop, handleDragOver } = useDragAndDrop();
-  const [isOpenAddTask, setIsOpenAddTask] = useState(false);
+  const [isOpenAddTask, setIsOpenAddTask] = useState<boolean>(false);
 
   return (
     <div
@@ -44,7 +57,7 @@ const TaskCard = (props) => {
       </div>
       {isExpanded && (
         <div className="task_body">
-          {!isMobile && props.cardName.toLowerCase() === "todo" && (
+          {!isMobile && cardName.toLowerCase() === "todo" && (
             <div
               className="add_task_btn "
               onClick={() => setIsOpenAddTask(!isOpenAddTask)}>
@@ -55,14 +68,12 @@ const TaskCard = (props) => {
               <p>ADD TASK</p>
             </div>
           )}
-          {!isMobile &&
-            props.cardName.toLowerCase() === "todo" &&
-            isOpenAddTask && (
-              <AddTask
-                setIsOpenAddTask={setIsOpenAddTask}
-                isOpenAddTask={isOpenAddTask}
-              />
-            )}
+          {!isMobile && cardName.toLowerCase() === "todo" && isOpenAddTask && (
+            <AddTask
+              setIsOpenAddTask={setIsOpenAddTask}
+              isOpenAddTask={isOpenAddTask}
+            />
+          )}
           {tasks.length === 0 ? (
             <div
               style={{
