@@ -12,14 +12,15 @@ function App() {
 
   const fetchDataFromLocalStorage = useCallback(() => {
     const myData: string = localStorage.getItem("userData") ?? "";
-    const result: UserData = JSON.parse(myData);
+
     if (myData !== "") {
+      const result: UserData = JSON.parse(myData);
       setLoading(false);
       setUserData(result);
     } else {
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate, setUserData]);
 
   useEffect(() => {
     fetchDataFromLocalStorage();
