@@ -36,6 +36,7 @@ const Header = ({ dataApi }: HeaderProps) => {
     setTimeout(async () => {
       try {
         await signOut(auth);
+        localStorage.removeItem("userData");
         navigate("/login");
       } catch (error) {
         console.error("Error while logging out:", error);
@@ -89,7 +90,7 @@ const Header = ({ dataApi }: HeaderProps) => {
         <div className="profile_header">
           <div className="profile">
             <img src={photoURL} draggable="false"></img>
-            {!isMobile && <p>{displayName.split(" ")[0]}</p>}
+            {!isMobile && <p>{displayName}</p>}
           </div>
           {!isMobile && (
             <div className="logout_btn" onClick={logoutUser}>

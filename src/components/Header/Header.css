@@ -52,11 +52,13 @@
 .profile {
   display: flex;
   align-items: center;
+
   cursor: pointer;
 }
 .profile img {
   width: 36px;
   height: 36px;
+  margin-right: 6px;
   border-radius: 50%;
 }
 .profile p {

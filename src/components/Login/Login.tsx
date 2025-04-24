@@ -4,7 +4,13 @@ import login from "../../assets/login.png";
 import circleBg from "../../assets/circles_bg.png";
 import dummyImg from "../../assets/login-dummy-img.png";
 import google from "../../assets/google.png";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import profile_img from "../../assets/profile_img.png";
+import blank_profile from "../../assets/blank_profile.png";
+import {
+  GoogleAuthProvider,
+  signInAnonymously,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -16,7 +22,6 @@ const Login = () => {
     signInWithPopup(auth, provider).then(async (result) => {
       try {
         if (result.user) {
-          // window.location.href = "/home";
           localStorage.setItem("userData", JSON.stringify(result.user));
           navigate("/");
         }
@@ -24,6 +29,25 @@ const Login = () => {
         navigate("/");
       }
     });
+  };
+
+  const guestSign = () => {
+    signInAnonymously(auth)
+      .then((result) => {
+        const dummyUserData = {
+          uid: result.user.uid,
+          displayName: "Guest Buddy",
+          photoURL: blank_profile,
+          isAnonymous: true,
+          email: null,
+        };
+        localStorage.setItem("userData", JSON.stringify(dummyUserData));
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        navigate("/");
+      });
   };
   const { isMobile } = useIsMobile();
   return (
@@ -60,6 +84,19 @@ const Login = () => {
           <p
             style={{ margin: 0, marginLeft: 10, fontSize: isMobile ? 14 : 18 }}>
             Continue with Google
+          </p>
+        </button>
+
+        <button className="login-btn" onClick={guestSign}>
+          <img
+            src={profile_img}
+            alt="icon"
+            draggable="false"
+            style={{ height: "23px" }}
+          />
+          <p
+            style={{ margin: 0, marginLeft: 10, fontSize: isMobile ? 14 : 18 }}>
+            Continue as Guest
           </p>
         </button>
       </div>
