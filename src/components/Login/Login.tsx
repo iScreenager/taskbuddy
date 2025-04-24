@@ -92,7 +92,7 @@ const Login = () => {
             src={profile_img}
             alt="icon"
             draggable="false"
-            style={{ height: "23px" }}
+            style={{ height: isMobile ? "18px" : "23px" }}
           />
           <p
             style={{ margin: 0, marginLeft: 10, fontSize: isMobile ? 14 : 18 }}>
