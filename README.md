@@ -36,11 +36,13 @@
 ## 📸 Screenshots
 
 <!-- Replace with your actual images -->
-![login](./src/assets/loginDashboard.png)
-![Dashboard](./src/assets/heroPage.png)  
-![form](./src/assets/taskCreateForm.png) 
-![board](./src/assets/boardPage.png) 
-![option](./src/assets/options.png)
+<div>
+  <img src="./src/assets/loginDashboard.png" alt="login" width="500" height="400" style="display: inline-block; margin-right: 10px;" />
+  <img src="./src/assets/heroPage.png" alt="Dashboard" width="500" height="400" style="display: inline-block; margin-right: 10px;" />
+  <img src="./src/assets/taskCreateForm.png" alt="form" width="500" height="400" style="display: inline-block; margin-right: 10px;" />
+  <img src="./src/assets/boardPage.png" alt="board" width="500" height="400" style="display: inline-block; margin-right: 10px;" />
+  <img src="./src/assets/options.png" alt="option" width="500" height="400" style="display: inline-block;" />
+</div>
 ---
 
 ## 📦 Installation
